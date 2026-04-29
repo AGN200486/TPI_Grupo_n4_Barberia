@@ -1,2 +1,2 @@
-# TPI-Grupo-n-4-Barber-a-
+# TPI_Grupo_n4_Barberia
 Sistema de gestión de turnos y carrito de productos de barbería.
