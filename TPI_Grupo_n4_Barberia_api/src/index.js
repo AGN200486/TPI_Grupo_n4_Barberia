@@ -1,6 +1,6 @@
 import express from "express";
 import { PORT } from "./config.js";
-import productRoutes from "./routes/books.routes.js";
+import productRoutes from "./routes/Product.routes.js";
 import { sequelize } from "./db.js";
 import "./models/Product.js";
 
