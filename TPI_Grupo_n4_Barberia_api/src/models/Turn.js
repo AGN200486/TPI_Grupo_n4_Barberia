@@ -2,33 +2,32 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../db.js";
 
 export const Turno = sequelize.define(
-  "Turno",
+  "Turn",
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    id_usuario: {
+    id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    id_barbero: {
+    id_barber: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    fecha_turno: {
+    turn_date: {
       type: DataTypes.DATE,
     },
-    hora_turno: {
+    turn_time: {
       type: DataTypes.TIME,
     },
-    estado: {
+    status: {
       type: DataTypes.ENUM('Pendiente', 'Cancelado', 'Finalizado'),
       defaultValue: 'Pendiente',
     },
-  },
-  {
+  }, {
     timestamps: false,
   }
 );
