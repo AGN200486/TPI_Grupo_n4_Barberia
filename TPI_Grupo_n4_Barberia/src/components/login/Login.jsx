@@ -1,9 +1,13 @@
 import { useRef, useState } from "react";
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../context/AuthContext"; 
+import { toast } from "react-toastify"; 
 
-const Login = ({ onLogin }) => {
+const Login = () => {
     const navigate = useNavigate();
+    const { login } = useAuth(); 
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({ email: false, password: false });
@@ -25,30 +29,42 @@ const Login = ({ onLogin }) => {
 
         if (!emailRef.current.value.length) {
             setErrors({ ...errors, email: true });
-            alert("¡Email vacío!");
+            toast.error("¡Debes completar el email!"); 
             emailRef.current.focus();
             return;
         } else if (!password.length || password.length < 7) {
             setErrors({ ...errors, password: true });
-            alert("¡Password vacío!");
+            toast.error("¡La contraseña debe tener mínimo 7 caracteres!"); 
             passwordRef.current.focus();
             return;
         }
 
         setErrors({ email: false, password: false });
-        alert(`El email ingresado es: ${email} y el password es ${password}`);
-        onLogin();
-        navigate("/library");
+
+        //Determinamos el rol simulado según el texto del email
+        let rolSimulado = "cliente";
+        if (email.includes("superadmin")) {
+            rolSimulado = "superadmin";
+        } else if (email.includes("admin")) {
+            rolSimulado = "admin";
+        }
+
+        const fakeUserData = {
+            email: email,
+            rol: rolSimulado 
+        };
+
+        login(fakeUserData); 
+        toast.success("¡Bienvenido a la Barbería!");
+        navigate("/library"); 
     };
 
     return (
-        <Card className="mt-5 mx-3 p-3 px-5 shadow">
+        <Card className="m-4 w-25 mx-auto bg-dark text-white border border-secondary">
             <Card.Body>
-                <Row className="mb-2">
-                    <h5>¡Bienvenidos a Books Champion!</h5>
-                </Row>
+                <h3 className="text-center mb-4">Iniciar Sesión</h3>
                 <Form onSubmit={handleSubmit}>
-                    <FormGroup className="mb-1">
+                    <FormGroup className="mb-3">
                         <Form.Control
                             type="email"
                             required
@@ -56,15 +72,10 @@ const Login = ({ onLogin }) => {
                             onChange={handleEmailChange}
                             ref={emailRef}
                             value={email}
-                            className={errors.email && "border border-danger"}
+                            className={errors.email ? "border border-danger" : ""}
                         />
-                        {errors.email && (
-                            <p className="text-danger mt-1 mb-0">
-                                Debes completar el email para iniciar sesión.
-                            </p>
-                        )}
                     </FormGroup>
-                    <FormGroup className="mb-4 mt-3">
+                    <FormGroup className="mb-4">
                         <Form.Control
                             type="password"
                             required
@@ -72,19 +83,13 @@ const Login = ({ onLogin }) => {
                             onChange={handlePasswordChange}
                             ref={passwordRef}
                             value={password}
-                            className={errors.password && "border border-danger"}
+                            className={errors.password ? "border border-danger" : ""}
                         />
-                        {errors.password && (
-                            <p className="text-danger mt-1 mb-0">
-                                Debes completar la contraseña (mínimo 7 caracteres) para iniciar sesión.
-                            </p>
-                        )}
                     </FormGroup>
                     <Row>
-                        <Col />
-                        <Col md={6} className="d-flex justify-content-end">
-                            <Button variant="secondary" type="submit">
-                                Iniciar sesión
+                        <Col className="d-flex justify-content-center">
+                            <Button variant="primary" type="submit" className="w-100">
+                                Entrar
                             </Button>
                         </Col>
                     </Row>
@@ -93,6 +98,5 @@ const Login = ({ onLogin }) => {
         </Card>
     );
 };
-
 
 export default Login;

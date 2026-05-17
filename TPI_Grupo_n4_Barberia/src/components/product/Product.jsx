@@ -4,14 +4,14 @@ import ProductItem from '../productItem/ProductItem';
 const Product = ({ product, onDelete }) => {
     return (
         <div className="d-flex justify-content-center flex-wrap">
-            {product.map((product) => (
+            {product.map((item) => (
                 <ProductItem
-                    key={product.id}
-                    id={product.id}
-                    title={product.nombre}
-                    imageUrl={product.imageUrl}
-                    available={product.available}
-                    summary={product.summary}
+                    key={item.id}
+                    id={item.id}
+                    nombre={item.nombre}
+                    imageUrl={item.imageUrl}
+                    available={item.available}
+                    summary={item.summary}
                     onDelete={onDelete}
                 />
             ))}

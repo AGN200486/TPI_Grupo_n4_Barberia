@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ConfirmDeleteModal from '../ui/ConfirmDeleteModal';
-
+import { useAuth } from '../../context/AuthContext'; 
 
 const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
+    const { user } = useAuth(); 
 
     const handleClick = () => {
         navigate(`${id}`, {
@@ -48,9 +49,13 @@ const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => 
                         <Button variant="primary" onClick={handleClick}>
                             Seleccionar producto
                         </Button>
-                        <Button variant="danger" onClick={handleDeleteClick}>
-                            Eliminar
-                        </Button>
+                        
+                        {/*Solo el Dueño (superadmin) puede ver y clickear para borrar */}
+                        {user?.rol === 'superadmin' && (
+                            <Button variant="danger" onClick={handleDeleteClick}>
+                                Eliminar
+                            </Button>
+                        )}
                     </div>
                 </Card.Body>
             </Card>
