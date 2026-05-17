@@ -6,18 +6,18 @@ import NewProduct from '../newProduct/NewProduct';
 
 
 const Dashboard = ({ onLogout }) => {
-    const [products, setBooks] = useState([]);
+    const [products, setProducts] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:3000/books")
+        fetch("http://localhost:3000/products")
             .then(res => res.json())
-            .then(data => setBooks([...data]))
+            .then(data => setProducts([...data]))
             .catch(error => console.log(error))
     }, []);
 
     const handleProductAdded = (enteredProduct) => {
-        fetch("http://localhost:3000/books", {
+        fetch("http://localhost:3000/products", {
             headers: {
                 "Content-type": "application/json"
             },
@@ -32,7 +32,7 @@ const Dashboard = ({ onLogout }) => {
     };
 
     const handleDeleteProduct = (enteredProduct, id) => {
-        fetch("http://localhost:3000/books", {
+        fetch("http://localhost:3000/products", {
             headers: {
                 "Content-type": "application/json"
             },
@@ -41,7 +41,7 @@ const Dashboard = ({ onLogout }) => {
         })
             .then(res => res.json())
             .then(data => {
-                setBooks((enteredProduct) => enteredProduct.filter((product) => product.id !== id))
+                setProducts((enteredProduct) => enteredProduct.filter((product) => product.id !== id))
             })
             .catch(err => console.log(err))
     };

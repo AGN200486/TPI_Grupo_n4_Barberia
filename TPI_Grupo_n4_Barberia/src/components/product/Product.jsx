@@ -5,7 +5,7 @@ const Product = ({ product, onDelete }) => {
     return (
         <div className="d-flex justify-content-center flex-wrap">
             {product.map((product) => (
-                <BookItem
+                <ProductItem
                     key={product.id}
                     id={product.id}
                     title={product.nombre}
