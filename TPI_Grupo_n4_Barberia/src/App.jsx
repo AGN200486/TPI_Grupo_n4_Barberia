@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import Header from './components/ui/Header';
+import Background from './components/ui/background';
 
 
 function App() {
@@ -18,7 +20,11 @@ function App() {
 
     return (
         <div>
-            <BrowserRouter>
+            <Header />
+            <Background />
+            
+            
+            {/*<BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Navigate to='login' />} />
                     <Route path='/login' element={<Login onLogin={handleLogIn} />} />
@@ -27,7 +33,9 @@ function App() {
                     </Route>
                     <Route path='*' element={<NotFound />} />
                 </Routes>
-            </BrowserRouter>
+            </BrowserRouter>*/}
+
+            
         </div>
     );
 }

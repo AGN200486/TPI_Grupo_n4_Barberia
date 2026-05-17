@@ -3,6 +3,9 @@ import { PORT } from "./config.js";
 import productRoutes from "./routes/Product.routes.js";
 import { sequelize } from "./db.js";
 import "./models/Product.js";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
 
 const app = express();
 
@@ -24,3 +27,6 @@ try {
 } catch (error) {
   console.error("There was an error on initialization:", error);
 }
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
