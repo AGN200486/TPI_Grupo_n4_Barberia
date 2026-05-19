@@ -12,13 +12,19 @@ import NotFound from './components/notFound/NotFound';
 function App() {
     return (
         <div>
-            {/* El contenedor global para que aparezcan los cartelitos de react-toastify */}
+            {/*Los carteles flotantes de notificación siempre arriba de todo */}
             <ToastContainer position="top-right" autoClose={3000} theme="dark" />
             
-            <Header />
-            <Background />
-            
+            {/*El Router envuelve todo*/}
             <BrowserRouter>
+                
+                {/*El Header acá arriba*/}
+                <Header /> 
+                
+                {/*La foto de fondo va abajo del Header */}
+                <Background />
+                
+                {/*Las rutas que cambian el cuerpo de la página */}
                 <Routes>
                     <Route path='/' element={<Navigate to='login' />} />
                     <Route path='/login' element={<Login />} />

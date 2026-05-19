@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router';
+import { Routes, Route, useNavigate, useSearchParams } from 'react-router';
 import { Button } from 'react-bootstrap';
 import Product from '../product/Product';
-import ProductDetails from '../productDetails/ProductDetails';
-import NewProduct from '../newProduct/NewProduct';
+import ProductDetails from '../productDetails/ProductDetails'
+import NewProduct from '../newProduct/NewProduct'
 import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
 
@@ -11,9 +11,10 @@ const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
     
-    //Este estado controla qué lista se muestra en pantalla: 'todos', 'servicios' o 'productos'
-    const [filtro, setFiltro] = useState('servicios'); 
-    
+    // Con esto leemos lo que el Header pone en la URL (?tipo=...)
+    const [searchParams] = useSearchParams();
+    const filtro = searchParams.get('tipo') || 'todos'; // Si no hay nada, muestra todos
+
     const navigate = useNavigate();
     const { user, logout } = useAuth(); 
 
@@ -68,27 +69,8 @@ const Dashboard = () => {
 
     return (
         <div className="container mt-2">
-            {/* BARRA SUPERIOR: Ahora los botones controlan el estado del filtro */}
+            {/*Limpia de filtros, solo las acciones de sesión*/}
             <div className="d-flex justify-content-end gap-2 p-2">
-                <Button 
-                    variant={filtro === 'servicios' ? "primary" : "outline-primary"} 
-                    onClick={() => setFiltro('servicios')}
-                >
-                    Servicios
-                </Button>
-                <Button 
-                    variant={filtro === 'productos' ? "primary" : "outline-primary"} 
-                    onClick={() => setFiltro('productos')}
-                >
-                    Productos
-                </Button>
-                <Button 
-                    variant="outline-light" 
-                    onClick={() => setFiltro('todos')}
-                >
-                    Ver Todos
-                </Button>
-
                 {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
                     <Button variant="success" onClick={handleNavigateAddProduct}>
                         + Agregar Ítem
@@ -107,14 +89,24 @@ const Dashboard = () => {
                     index
                     element={
                         <div className="mt-4">
-                            {/* Mostramos la lista que corresponda según el botón presionado */}
-                            {filtro === 'servicios' && <Product product={services} onDelete={handleDeleteProduct} />}
-                            {filtro === 'productos' && <Product product={products} onDelete={handleDeleteProduct} />}
+                            {/* Evaluamos dinámicamente según el click que hicieron en el Header superior */}
+                            {filtro === 'servicios' && (
+                                <>
+                                    <h4 className="text-white mb-3 text-center">Nuestros Servicios</h4>
+                                    <Product product={services} onDelete={handleDeleteProduct} />
+                                </>
+                            )}
+                            {filtro === 'productos' && (
+                                <>
+                                    <h4 className="text-white mb-3 text-center">Productos en Venta</h4>
+                                    <Product product={products} onDelete={handleDeleteProduct} />
+                                </>
+                            )}
                             {filtro === 'todos' && (
                                 <>
                                     <h4 className="text-white mb-3">Servicios</h4>
                                     <Product product={services} onDelete={handleDeleteProduct} />
-                                    <h4 className="text-white mt-4 mb-3">Productos</h4>
+                                    <h4 className="text-white mt-5 mb-3">Productos</h4>
                                     <Product product={products} onDelete={handleDeleteProduct} />
                                 </>
                             )}
