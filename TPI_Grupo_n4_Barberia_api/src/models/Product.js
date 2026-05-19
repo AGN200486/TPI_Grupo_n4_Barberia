@@ -9,23 +9,22 @@ export const Product = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    nombre: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    descripcion: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    precio: {
+    price: {
       type: DataTypes.FLOAT,
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
     }
-  },
-  {
+  }, {
     timestamps: false,
   }
 );
