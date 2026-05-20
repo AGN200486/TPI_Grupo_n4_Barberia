@@ -6,6 +6,10 @@ import ProductDetails from '../productDetails/ProductDetails'
 import NewProduct from '../newProduct/NewProduct'
 import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
+import sprayImg from "../../imagenes/spray.png";
+import tijeraImg from "../../imagenes/tijera.png";
+import maquinaImg from "../../imagenes/maquina.png";
+import bigoteImg from "../../imagenes/bigote.png";
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
@@ -20,13 +24,13 @@ const Dashboard = () => {
 
     useEffect(() => {
         const productosIniciales = [
-            { id: "p1", nombre: "Cera Pomada Matte", imageUrl: "https://via.placeholder.com/150", available: true, summary: "Fijación fuerte y efecto opaco natural." },
-            { id: "p2", nombre: "Tijera de Pulir 5.5", imageUrl: "https://via.placeholder.com/150", available: true, summary: "Tijera profesional de acero inoxidable." }
+            { id: "p1", nombre: "Cera Pomada Matte", imageUrl: sprayImg, available: true, summary: "Fijación fuerte y efecto opaco natural." },
+            { id: "p2", nombre: "Tijera de Pulir 5.5", imageUrl: tijeraImg, available: true, summary: "Tijera profesional de acero inoxidable." }
         ];
 
         const serviciosIniciales = [
-            { id: "s1", nombre: "Corte Clásico", imageUrl: "https://via.placeholder.com/150", available: true, summary: "Corte tradicional a tijera y máquina." },
-            { id: "s2", nombre: "Corte Degradé + Barba", imageUrl: "https://via.placeholder.com/150", available: true, summary: "Degradé moderno con perfilado de barba." }
+            { id: "s1", nombre: "Corte Clásico", imageUrl: maquinaImg, available: true, summary: "Corte tradicional a tijera y máquina." },
+            { id: "s2", nombre: "Corte Degradé + Barba", imageUrl: bigoteImg, available: true, summary: "Degradé moderno con perfilado de barba." }
         ];
 
         setProducts(productosIniciales);
