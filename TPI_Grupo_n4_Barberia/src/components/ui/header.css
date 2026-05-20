@@ -1,29 +1,46 @@
 .header {
-  background-color: #222;
-  color: gray;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    background-color: #222;
+    color: gray;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-  width: 50px;
-  height: auto;
-  margin-right: 15px;
+    width: 50px;
+    height: auto;
 }
 
-.header ul {
-  list-style: none;
-  display: flex;
-  gap: 1rem;
+/*Contenedor izquierdo para que logo y h1 no se separen*/
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el logo y el h1*/
 }
 
-.header a {
-  color: white;
-  text-decoration: none;
+.header-left h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.8rem;
 }
 
-.tijera {
-    width: 20px
+/*Estilo para cada botón interactivo*/
+.nav-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre la tijera y la palabra */
+    font-size: 1.1rem;
+    transition: opacity 0.2s;
+}
+
+.nav-item:hover {
+    opacity: 0.8; /* Efecto sutil cuando pasan el mouse*/
+}
+
+/*Estilo para controlar el tamaño de la tijera al lado del texto*/
+.tijera-icon {
+    width: 18px;
+    height: auto;
 }
