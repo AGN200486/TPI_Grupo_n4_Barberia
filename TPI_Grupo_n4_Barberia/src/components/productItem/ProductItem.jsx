@@ -39,9 +39,10 @@ const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => 
     return (
         <>
             <Card className="mx-3 mb-4" style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={imageUrl} />
+                
                 <Card.Body>
                     <Card.Title>{nombre}</Card.Title>
+                    <Card.Img variant="top" style={{width: "6rem", height: "5rem"}} src={imageUrl} />
                     <div>
                         <p>{available ? "Disponible" : "Sin Stock"}</p>
                     </div>
