@@ -85,7 +85,7 @@ const Dashboard = () => {
                 </Button>
             </div>
             
-            <h2 className="text-center mt-3 text-white">AGN FERRETERÍA & BARBERÍA</h2>
+            <h2 className="text-center mt-3 text-white">BARBERÍA</h2>
             <p className="text-center text-muted">Gestión de Turnos y Catálogo de Productos</p>
             
             <Routes>
