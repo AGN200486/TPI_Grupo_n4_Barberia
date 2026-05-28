@@ -11,6 +11,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({ email: false, password: false });
+    
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
@@ -24,68 +25,85 @@ const Login = () => {
         setErrors({ ...errors, password: false });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!emailRef.current.value.length) {
-            setErrors({ ...errors, email: true });
-            toast.error("¡Debes completar el email!"); 
+        if (!email.length) {
+            setErrors({ email: true, password: false });
+            toast.error("¡Debes completar el email para iniciar sesión!"); 
             emailRef.current.focus();
             return;
-        } else if (!password.length || password.length < 7) {
-            setErrors({ ...errors, password: true });
+        }
+
+        if (!password.length || password.length < 7) {
+            setErrors({ email: false, password: true });
             toast.error("¡La contraseña debe tener mínimo 7 caracteres!"); 
             passwordRef.current.focus();
             return;
         }
 
-        setErrors({ email: false, password: false });
+        try {
+            //PETICIÓN HTTP
+            const response = await fetch("http://localhost:3000/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-        //Determinamos el rol simulado según el texto del email
-        let rolSimulado = "cliente";
-        if (email.includes("superadmin")) {
-            rolSimulado = "superadmin";
-        } else if (email.includes("admin")) {
-            rolSimulado = "admin";
+            if (!response.ok) {
+                const errorData = await response.json();
+                toast.error(errorData.message || "Error al iniciar sesión");
+                return;
+            }
+
+            //Recibimos el token de forma directa como un string 
+            const token = await response.json();
+
+            setErrors({ email: false, password: false });
+            toast.success("¡Inicio de sesión exitoso!");
+
+            //Le pasamos el token al contexto tal cual hace el libro de la materia
+            login(token); 
+
+            navigate("/library"); 
+            
+        } catch (error) {
+            console.error(error);
+            toast.error("No se pudo conectar con el servidor");
         }
-
-        const fakeUserData = {
-            email: email,
-            rol: rolSimulado 
-        };
-
-        login(fakeUserData); 
-        toast.success("¡Bienvenido a la Barbería!");
-        navigate("/library"); 
     };
 
     return (
-        <Card className="m-4 w-25 mx-auto bg-dark text-white border border-secondary">
+        <Card className="m-4 w-25 mx-auto bg-dark text-white border border-secondary shadow">
             <Card.Body>
                 <h3 className="text-center mb-4">Iniciar Sesión</h3>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup className="mb-3">
                         <Form.Control
                             type="email"
-                            required
                             placeholder="Ingresar email"
                             onChange={handleEmailChange}
                             ref={emailRef}
                             value={email}
                             className={errors.email ? "border border-danger" : ""}
                         />
+                        {errors.email && <p className="text-danger mt-1 mb-0">Debes completar el email para iniciar sesión.</p>}
                     </FormGroup>
-                    <FormGroup className="mb-4">
+                    
+                    <FormGroup className="mb-4 mt-3">
                         <Form.Control
                             type="password"
-                            required
                             placeholder="Ingresar contraseña"
                             onChange={handlePasswordChange}
                             ref={passwordRef}
                             value={password}
                             className={errors.password ? "border border-danger" : ""}
                         />
+                        {errors.password && <p className="text-danger mt-1 mb-0">Debes completar la contraseña, mínimo 7 caracteres.</p>}
                     </FormGroup>
+                    
                     <Row>
                         <Col className="d-flex justify-content-center">
                             <Button variant="primary" type="submit" className="w-100">

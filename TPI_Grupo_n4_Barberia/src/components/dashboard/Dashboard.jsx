@@ -6,59 +6,70 @@ import ProductDetails from '../productDetails/ProductDetails'
 import NewProduct from '../newProduct/NewProduct'
 import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
-import sprayImg from "../../imagenes/spray.png";
-import tijeraImg from "../../imagenes/tijera.png";
-import maquinaImg from "../../imagenes/maquina.png";
-import bigoteImg from "../../imagenes/bigote.png";
+
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
     
-    // Con esto leemos lo que el Header pone en la URL (?tipo=...)
     const [searchParams] = useSearchParams();
-    const filtro = searchParams.get('tipo') || 'todos'; // Si no hay nada, muestra todos
+    const filtro = searchParams.get('tipo') || 'todos'; 
 
     const navigate = useNavigate();
-    const { user, logout } = useAuth(); 
+    const { user, logout } = useAuth(); //Traemos el usuario logueado del contexto
 
+    //Cargar catálogo inicial
     useEffect(() => {
-        const productosIniciales = [
-            { id: "p1", nombre: "Cera Pomada Matte", imageUrl: sprayImg, available: true, summary: "Fijación fuerte y efecto opaco natural." },
-            { id: "p2", nombre: "Tijera de Pulir 5.5", imageUrl: tijeraImg, available: true, summary: "Tijera profesional de acero inoxidable." }
-        ];
-
-        const serviciosIniciales = [
-            { id: "s1", nombre: "Corte Clásico", imageUrl: maquinaImg, available: true, summary: "Corte tradicional a tijera y máquina." },
-            { id: "s2", nombre: "Corte Degradé + Barba", imageUrl: bigoteImg, available: true, summary: "Degradé moderno con perfilado de barba." }
-        ];
-
-        setProducts(productosIniciales);
-        setServices(serviciosIniciales);
+        fetch('http://localhost:3000/products', {
+            method: 'GET'
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('No se pudo cargar el catálogo');
+                }
+                return res.json();
+            })
+            .then((datos) => {
+                //Separamos dinámicamente según 'isService'
+                setProducts(datos.filter(item => !item.isService));
+                setServices(datos.filter(item => item.isService));
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error('Error al conectar con el catálogo de la barbería');
+            });
     }, []);
 
-    const handleProductAdded = (enteredData) => {
-        const nuevoItemSimulado = {
-            ...enteredData,
-            id: Math.random().toString()
-        };
-
-        if (enteredData.isService) {
-            setServices(prev => [nuevoItemSimulado, ...prev]);
-            toast.success("¡Servicio agregado correctamente! (Simulado)");
-        } else {
-            setProducts(prev => [nuevoItemSimulado, ...prev]);
-            toast.success("¡Producto agregado correctamente! (Simulado)");
-        }
+    //Esta función se llamará desde NewProduct cuando inserte con éxito en la API
+    const handleProductAdded = () => {
+        fetch('http://localhost:3000/products')
+            .then((res) => res.json())
+            .then((datos) => {
+                setProducts(datos.filter(item => !item.isService));
+                setServices(datos.filter(item => item.isService));
+            })
+            .catch((err) => console.log(err));
     };
 
+    // PETICIÓN DELETE: Elimina físicamente el producto/servicio usando su ID 
     const handleDeleteProduct = (id) => {
-        if (id.startsWith('s')) {
-            setServices(prev => prev.filter(s => s.id !== id));
-        } else {
-            setProducts(prev => prev.filter(p => p.id !== id));
-        }
-        toast.success("¡Ítem eliminado! (Simulado)");
+        fetch(`http://localhost:3000/products/${id}`, {
+            method: 'DELETE',
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('No se pudo eliminar el ítem');
+                }
+
+                //Filtramos el estado local para que desaparezca de la pantalla al instante
+                setProducts((prevProducts) => prevProducts.filter((p) => p.id !== id));
+                setServices((prevServices) => prevServices.filter((s) => s.id !== id));
+                toast.success('Ítem eliminado correctamente');
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error('No se pudo eliminar el ítem');
+            });
     };
 
     const handleNavigateAddProduct = () => {
@@ -73,8 +84,8 @@ const Dashboard = () => {
 
     return (
         <div className="container mt-2">
-            {/*Limpia de filtros, solo las acciones de sesión*/}
             <div className="d-flex justify-content-end gap-2 p-2">
+                {/*CONTROL DE PERMISOS: Solo admin o superadmin ven el botón de agregar */}
                 {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
                     <Button variant="success" onClick={handleNavigateAddProduct}>
                         + Agregar Ítem
@@ -93,7 +104,6 @@ const Dashboard = () => {
                     index
                     element={
                         <div className="mt-4">
-                            {/* Evaluamos dinámicamente según el click que hicieron en el Header superior */}
                             {filtro === 'servicios' && (
                                 <>
                                     <h4 className="text-white mb-3 text-center">Nuestros Servicios</h4>
