@@ -8,10 +8,10 @@ const Product = ({ product, onDelete }) => {
                 <ProductItem
                     key={item.id}
                     id={item.id}
-                    nombre={item.nombre}
+                    nombre={item.name}          
                     imageUrl={item.imageUrl}
-                    available={item.available}
-                    summary={item.summary}
+                    available={item.stock > 0} 
+                    summary={item.description}  
                     onDelete={onDelete}
                 />
             ))}

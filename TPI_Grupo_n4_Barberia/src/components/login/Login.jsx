@@ -25,9 +25,10 @@ const Login = () => {
         setErrors({ ...errors, password: false });
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
+        //Validaciones
         if (!email.length) {
             setErrors({ email: true, password: false });
             toast.error("¡Debes completar el email para iniciar sesión!"); 
@@ -42,37 +43,33 @@ const Login = () => {
             return;
         }
 
-        try {
-            //PETICIÓN HTTP
-            const response = await fetch("http://localhost:3000/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password })
+        //Petición HTTP 
+        fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error("Credenciales incorrectas o usuario no existente");
+                }
+                return res.json(); //Leemos el objeto { token, role } del backend
+            })
+            .then((data) => {
+                setErrors({ email: false, password: false });
+                toast.success("¡Inicio de sesión exitoso!");
+
+                //Impactamos el token y el rol real en el contexto global
+                login(data.token, data.role); 
+
+                navigate("/library"); 
+            })
+            .catch((error) => {
+                console.error(error);
+                toast.error(error.message || "No se pudo conectar con el servidor");
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                toast.error(errorData.message || "Error al iniciar sesión");
-                return;
-            }
-
-            //Recibimos el token de forma directa como un string 
-            const token = await response.json();
-
-            setErrors({ email: false, password: false });
-            toast.success("¡Inicio de sesión exitoso!");
-
-            //Le pasamos el token al contexto tal cual hace el libro de la materia
-            login(token); 
-
-            navigate("/library"); 
-            
-        } catch (error) {
-            console.error(error);
-            toast.error("No se pudo conectar con el servidor");
-        }
     };
 
     return (

@@ -51,7 +51,7 @@ const Dashboard = () => {
             .catch((err) => console.log(err));
     };
 
-    // PETICIÓN DELETE: Elimina físicamente el producto/servicio usando su ID 
+    //PETICIÓN DELETE: Elimina físicamente el producto/servicio usando su ID 
     const handleDeleteProduct = (id) => {
         fetch(`http://localhost:3000/products/${id}`, {
             method: 'DELETE',

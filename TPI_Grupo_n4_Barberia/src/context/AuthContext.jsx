@@ -4,34 +4,33 @@ import { createContext, useState, useContext, useEffect } from 'react';
 const AuthContext = createContext();
 //Creamos el Proveedor que va a envolver a la aplicación
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null); //Acá guardamos los datos del usuario o null si no está logueado
-    //Usamos el token guardado para saber si hay una sesión activa al recargar la página
+    const [user, setUser] = useState(null); 
     const [token, setToken] = useState(localStorage.getItem('token') || null);
 
-    //Este useEffect se ejecuta una sola vez cuando se abre la app.
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        const storedEmail = localStorage.getItem('userEmail');
-        const storedRole = localStorage.getItem('userRole');
+        const storedRole = localStorage.getItem('userRole'); 
 
-        if (storedToken && storedEmail) {
-            setUser({ email: storedEmail, rol: storedRole });
+        //Si existen los datos en el navegador, restauramos la sesión automáticamente
+        if (storedToken && storedRole) {
+            setUser({ rol: storedRole }); 
             setToken(storedToken);
         }
     }, []);
 
-    
-    const login = (tokenReal) => {
+    //El login recibe los dos parámetros legítimos que mandó la base de datos
+    const login = (tokenReal, rolReal) => {
         setToken(tokenReal);
+        setUser({ rol: rolReal }); 
+        
         localStorage.setItem('token', tokenReal);
-        setUser({ logged: true }); 
+        localStorage.setItem('userRole', rolReal); 
     };
 
     const logout = () => {
         setUser(null);
         setToken(null);
         localStorage.removeItem('token');
-        localStorage.removeItem('userEmail');
         localStorage.removeItem('userRole');
     };
 
