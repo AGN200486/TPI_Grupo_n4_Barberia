@@ -7,12 +7,13 @@ import { toast } from "react-toastify";
 const NewProduct = ({ onProductAdded }) => {
     const navigate = useNavigate();
     const { user } = useAuth(); 
-    
-    const [nombre, setNombre] = useState("");
+
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState(""); 
+    const [price, setPrice] = useState("");
+    const [stock, setStock] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    const [summary, setSummary] = useState(""); 
-    const [available, setAvailable] = useState(false);
-    const [isService, setIsService] = useState(false); //Campo para diferenciar tipo de Item (Producto o Servicio)
+    const [isService, setIsService] = useState(false); 
 
     useEffect(() => {
         if (user?.rol !== "admin" && user?.rol !== "superadmin") {
@@ -21,33 +22,57 @@ const NewProduct = ({ onProductAdded }) => {
         }
     }, [user, navigate]);
 
-    const handleNombreChange = (event) => setNombre(event.target.value);
+    const handleNameChange = (event) => setName(event.target.value);
+    const handleDescriptionChange = (event) => setDescription(event.target.value);
+    const handlePriceChange = (event) => setPrice(event.target.value);
+    const handleStockChange = (event) => setStock(event.target.value);
     const handleImageUrlChange = (event) => setImageUrl(event.target.value);
-    const handleSummaryChange = (event) => setSummary(event.target.value);
-    const handleAvailabilityChange = (event) => setAvailable(event.target.checked);
     const handleTypeChange = (event) => setIsService(event.target.value === "servicio");
 
     const handleAddProduct = (event) => {
         event.preventDefault();
 
         const productData = {
-            nombre: nombre,
+            name: name,
+            description: description,
+            price: Number(price), 
+            stock: Number(stock), 
             imageUrl: imageUrl,
-            summary: summary,
-            available: available,
-            isService: isService //Se manda la bandera al dashboard
+            isService: isService 
         };
 
-        onProductAdded(productData);
-        navigate("/library"); 
+        fetch('http://localhost:3000/products', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productData)
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    return res.json().then((errorData) => {
+                        throw new Error(errorData.message || 'Error al guardar el elemento');
+                    });
+                }
+                return res.json();
+            })
+            .then(() => {
+                toast.success("¡Ítem agregado correctamente!");
+                onProductAdded();
+                navigate("/library");
+            })
+            .catch((err) => {
+                console.error("Error detallado:", err);
+                toast.error(err.message || "No se pudo guardar el ítem en el servidor.");
+            });
     };
 
     return (
-        <Card className="m-4 w-50 mx-auto bg-dark text-white border border-secondary">
+        <Card className="m-4 w-50 mx-auto bg-dark text-white border border-secondary shadow">
             <Card.Body>
                 <h4 className="mb-4 text-center">Agregar Nuevo Ítem</h4>
                 <Form onSubmit={handleAddProduct}>
-                    {/*SELECTOR: Define a qué pestaña irá a parar */}
+                    
                     <Form.Group className="mb-3" controlId="tipo">
                         <Form.Label>Tipo de Ítem</Form.Label>
                         <Form.Select className="bg-secondary text-white border-0" onChange={handleTypeChange}>
@@ -56,27 +81,36 @@ const NewProduct = ({ onProductAdded }) => {
                         </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="nombre">
+                    <Form.Group className="mb-3" controlId="name">
                         <Form.Label>Nombre</Form.Label>
-                        <Form.Control type="text" placeholder="Ej: Cera / Corte Facha" value={nombre} onChange={handleNombreChange} required />
+                        <Form.Control type="text" placeholder="Ej: Cera / Corte Facha" value={name} onChange={handleNameChange} required />
                     </Form.Group>
+
+                    <Row className="mb-3">
+                        <Form.Group as={Col} controlId="price">
+                            <Form.Label>Precio ($)</Form.Label>
+                            <Form.Control type="number" placeholder="Ej: 2500" value={price} onChange={handlePriceChange} required />
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="stock">
+                            <Form.Label>{isService ? "Turnos por día" : "Stock disponible"}</Form.Label>
+                            <Form.Control type="number" placeholder="Ej: 10" value={stock} onChange={handleStockChange} required />
+                        </Form.Group>
+                    </Row>
                     
                     <Form.Group className="mb-3" controlId="imageUrl">
                         <Form.Label>URL de la Imagen</Form.Label>
                         <Form.Control type="text" placeholder="https://..." value={imageUrl} onChange={handleImageUrlChange} />
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="summary">
-                        <Form.Label>Descripción Corta</Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder="Detalles..." value={summary} onChange={handleSummaryChange} />
+                    <Form.Group className="mb-3" controlId="description">
+                        <Form.Label>Descripción</Form.Label>
+                        <Form.Control as="textarea" rows={3} placeholder="Detalles del producto o servicio..." value={description} onChange={handleDescriptionChange} />
                     </Form.Group>
 
-                    <div className="d-flex justify-content-between align-items-center mt-4">
-                        <Form.Check type="switch" id="available" label="¿Disponible / Con Stock?" checked={available} onChange={handleAvailabilityChange} />
-                        <div className="d-flex gap-2">
-                            <Button variant="secondary" onClick={() => navigate("/library")}>Volver</Button>
-                            <Button variant="success" type="submit">Guardar</Button>
-                        </div>
+                    <div className="d-flex justify-content-end gap-2 mt-4">
+                        <Button variant="secondary" onClick={() => navigate("/library")}>Volver</Button>
+                        <Button variant="success" type="submit">Guardar en Servidor</Button>
                     </div>
                 </Form>
             </Card.Body>

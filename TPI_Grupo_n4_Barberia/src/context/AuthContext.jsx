@@ -1,29 +1,46 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 //Creamos el contexto
 const AuthContext = createContext();
-
 //Creamos el Proveedor que va a envolver a la aplicación
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // Acá guardamos los datos del usuario o null si no está logueado
+    const [user, setUser] = useState(null); 
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
 
-    const login = (userData) => {
-        setUser(userData); //Guardamos los datos del usuario en el estado global
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        const storedRole = localStorage.getItem('userRole'); 
+
+        //Si existen los datos en el navegador, restauramos la sesión automáticamente
+        if (storedToken && storedRole) {
+            setUser({ rol: storedRole }); 
+            setToken(storedToken);
+        }
+    }, []);
+
+    //El login recibe los dos parámetros legítimos que mandó la base de datos
+    const login = (tokenReal, rolReal) => {
+        setToken(tokenReal);
+        setUser({ rol: rolReal }); 
+        
+        localStorage.setItem('token', tokenReal);
+        localStorage.setItem('userRole', rolReal); 
     };
 
     const logout = () => {
-        setUser(null); //Limpiamos el usuario al cerrar sesión
+        setUser(null);
+        setToken(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('userRole');
     };
 
-    //Compartimos el estado 'user' y las funciones 'login' y 'logout'
     return (
-        <AuthContext.Provider value={{ user, login, logout, isSignedIn: !!user }}>
+        <AuthContext.Provider value={{ user, token, login, logout, isSignedIn: !!token }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-//Creamos un Hook personalizado para que usar el contexto sea más fácil en otros componentes
 export const useAuth = () => {
     return useContext(AuthContext);
 };
