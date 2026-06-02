@@ -3,11 +3,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';  
 import Login from './components/login/Login';
+import Register from './components/register/Register';
 import Dashboard from './components/dashboard/Dashboard';
 import Header from './components/ui/Header';
 import Background from './components/ui/background';
 import Protected from './components/protected/Protected'; 
-import NotFound from './components/notFound/NotFound';        
+import NotFound from './components/notFound/NotFound';       
+import ReservationsList from './components/reservations/ReservationsList'; 
 
 function App() {
     return (
@@ -28,11 +30,14 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Navigate to='login' />} />
                     <Route path='/login' element={<Login />} />
+                    <Route path='/register' element={<Register />} />
                     
                     <Route element={<Protected />}>
                         <Route path='/library/*' element={<Dashboard />} />
                     </Route>
                     
+                    <Route path="/reservations" element={<ReservationsList />} />
+
                     <Route path='*' element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

@@ -4,12 +4,12 @@ import { sequelize } from "./db.js";
 //Importación de rutas
 import productRoutes from "./routes/product.routes.js"
 import authRoutes from "./routes/auth.routes.js"
-import turnRoutes from "./routes/turn.routes.js"
+import reservationRoutes from "./routes/reservation.routes.js"
 
 //Importación de modelos para que Sequelize los registre al sincronizar la DB
 import "./models/Product.js"
 import "./models/User.js";
-import "./models/Turn.js";
+import "./models/Reservation.js";
 
 const app = express();
 
@@ -27,7 +27,7 @@ try {
   //Enrutadores principales
   app.use(productRoutes);
   app.use(authRoutes);
-  app.use(turnRoutes);
+  app.use(reservationRoutes);
 
   //Sincronizar Base de Datos y levantar el servidor
   //Usamos 'alter: true' para que si cambiamos columnas en los modelos, se acomoden solas las tablas
