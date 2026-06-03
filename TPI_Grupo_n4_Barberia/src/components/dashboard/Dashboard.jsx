@@ -2,23 +2,23 @@ import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, useSearchParams } from 'react-router';
 import { Button } from 'react-bootstrap';
 import Product from '../product/Product';
-import ProductDetails from '../productDetails/ProductDetails'
-import NewProduct from '../newProduct/NewProduct'
+import ProductDetails from '../productDetails/ProductDetails';
+import NewProduct from '../newProduct/NewProduct';
 import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
-
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
     
     const [searchParams] = useSearchParams();
+    // Captura "servicios", "productos" o cae en "todos" si se hace clic en Inicio
     const filtro = searchParams.get('tipo') || 'todos'; 
 
     const navigate = useNavigate();
-    const { user, logout } = useAuth(); //Traemos el usuario logueado del contexto
+    const { user, logout } = useAuth(); // Traemos el usuario logueado del contexto
 
-    //Cargar catálogo inicial
+    // Cargar catálogo inicial
     useEffect(() => {
         fetch('http://localhost:3000/products', {
             method: 'GET'
@@ -30,9 +30,9 @@ const Dashboard = () => {
                 return res.json();
             })
             .then((datos) => {
-                //Separamos dinámicamente según 'isService'
-                setProducts(datos.filter(item => !item.isService));
-                setServices(datos.filter(item => item.isService));
+                // Separamos dinámicamente según 'isService' (Soporta booleanos y enteros de SQLite)
+                setProducts(datos.filter(item => !item.isService || item.isService === 0 || item.isService === false));
+                setServices(datos.filter(item => item.isService || item.isService === 1 || item.isService === true));
             })
             .catch((err) => {
                 console.log(err);
@@ -40,18 +40,18 @@ const Dashboard = () => {
             });
     }, []);
 
-    //Esta función se llamará desde NewProduct cuando inserte con éxito en la API
+    // Esta función se llamará desde NewProduct cuando inserte con éxito en la API
     const handleProductAdded = () => {
         fetch('http://localhost:3000/products')
             .then((res) => res.json())
             .then((datos) => {
-                setProducts(datos.filter(item => !item.isService));
-                setServices(datos.filter(item => item.isService));
+                setProducts(datos.filter(item => !item.isService || item.isService === 0 || item.isService === false));
+                setServices(datos.filter(item => item.isService || item.isService === 1 || item.isService === true));
             })
             .catch((err) => console.log(err));
     };
 
-    //PETICIÓN DELETE: Elimina físicamente el producto/servicio usando su ID 
+    // PETICIÓN DELETE: Elimina físicamente el producto/servicio usando su ID 
     const handleDeleteProduct = (id) => {
         fetch(`http://localhost:3000/products/${id}`, {
             method: 'DELETE',
@@ -61,7 +61,7 @@ const Dashboard = () => {
                     throw new Error('No se pudo eliminar el ítem');
                 }
 
-                //Filtramos el estado local para que desaparezca de la pantalla al instante
+                // Filtramos el estado local para que desaparezca de la pantalla al instante
                 setProducts((prevProducts) => prevProducts.filter((p) => p.id !== id));
                 setServices((prevServices) => prevServices.filter((s) => s.id !== id));
                 toast.success('Ítem eliminado correctamente');
@@ -85,7 +85,7 @@ const Dashboard = () => {
     return (
         <div className="container mt-2">
             <div className="d-flex justify-content-end gap-2 p-2">
-                {/*CONTROL DE PERMISOS: Solo admin o superadmin ven el botón de agregar */}
+                {/* CONTROL DE PERMISOS: Solo admin o superadmin ven el botón de agregar */}
                 {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
                     <Button variant="success" onClick={handleNavigateAddProduct}>
                         + Agregar Ítem
@@ -104,6 +104,7 @@ const Dashboard = () => {
                     index
                     element={
                         <div className="mt-4">
+                            {/* Ajuste de Filtro: Evalúa lo que manda el hook real useSearchParams */}
                             {filtro === 'servicios' && (
                                 <>
                                     <h4 className="text-white mb-3 text-center">Nuestros Servicios</h4>

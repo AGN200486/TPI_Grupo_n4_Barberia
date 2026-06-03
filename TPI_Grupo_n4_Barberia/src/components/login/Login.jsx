@@ -106,6 +106,9 @@ const Login = () => {
                             <Button variant="primary" type="submit" className="w-100">
                                 Entrar
                             </Button>
+                            <Button variant="link" className="text-muted text-decoration-none p-0 mt-3 d-block mx-auto" onClick={() => navigate("/register")}>
+                                ¿No tenés cuenta todavía? Registrate gratis acá
+                            </Button>
                         </Col>
                     </Row>
                 </Form>

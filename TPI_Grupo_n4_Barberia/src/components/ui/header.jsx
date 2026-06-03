@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router";
+import { useAuth } from "../../context/AuthContext"; // 👈 Importamos el contexto para saber quién está logueado
 import logo from '../../imagenes/iconoP.png';
 import tijera from '../../imagenes/tijera.png';
 import './Header.css';
 
 const Header = () => {
     const navigate = useNavigate();
+    const { user } = useAuth(); // 👈 Traemos al usuario activo
+
+    // Evaluamos si el rol es administrativo para cambiar el texto del botón
+    const isAdmin = user?.rol === 'admin' || user?.rol === 'superadmin';
 
     return (
         <header className="header">
@@ -16,7 +21,7 @@ const Header = () => {
 
             {/* El nav se va a ir por completo a la derecha gracias al flexbox */}
             <nav>
-                <div className="d-flex gap-4">
+                <div className="d-flex gap-4 align-items-center">
                     <span className="text-white text-decoration-none nav-item" onClick={() => navigate("/library")}>
                         <img src={tijera} alt="tijera" className="tijera-icon" />
                         Inicio
@@ -29,6 +34,14 @@ const Header = () => {
                         <img src={tijera} alt="tijera" className="tijera-icon" />
                         Productos
                     </span>
+
+                    {/* 📅 NUEVO BOTÓN: Solo se renderiza si hay un usuario logueado en el sistema */}
+                    {user && (
+                        <span className="text-white text-decoration-none nav-item fw-bold text-success" onClick={() => navigate("/reservations")}>
+                            <img src={tijera} alt="tijera" className="tijera-icon" />
+                            Reservas {isAdmin ? "(Panel)" : ""}
+                        </span>
+                    )}
                 </div>
             </nav>
         </header>
