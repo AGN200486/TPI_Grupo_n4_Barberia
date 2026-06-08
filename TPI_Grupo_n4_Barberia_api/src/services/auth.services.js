@@ -41,7 +41,7 @@ export const registerUser = async (req, res) => {
             name,
             surname,
             email,
-            password: hashedPassword,
+            password: hashedPassword, //contrasea hasheada
             role: role || "cliente" //cliente es el rol default
         });
 
