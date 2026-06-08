@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext"; // 👈 Importamos el contexto para saber quién está logueado
 import logo from '../../imagenes/iconoP.png';
 import tijera from '../../imagenes/tijera.png';
+import carro from '../../imagenes/carro.png';
 import './Header.css';
 
 const Header = () => {
@@ -35,11 +36,18 @@ const Header = () => {
                         Productos
                     </span>
 
-                    {/* 📅 NUEVO BOTÓN: Solo se renderiza si hay un usuario logueado en el sistema */}
+                    {/* 📅 NUEVOS BOTONES: Solo se renderizan si hay un usuario logueado en el sistema */}
                     {user && (
                         <span className="text-white text-decoration-none nav-item fw-bold text-success" onClick={() => navigate("/reservations")}>
-                            <img src={tijera} alt="tijera" className="tijera-icon" />
+                            <img src={carro} alt="carro" className="carro-icon" />
                             Reservas {isAdmin ? "(Panel)" : ""}
+                        </span>
+                    )}
+
+                    {user && (
+                        <span className="text-white text-decoration-none nav-item fw-bold text-success" onClick={() => navigate("/cart")}>
+                            <img src={carro} alt="carro" className="carro-icon" />
+                            Carro {isAdmin ? "(Panel)" : ""}
                         </span>
                     )}
                 </div>

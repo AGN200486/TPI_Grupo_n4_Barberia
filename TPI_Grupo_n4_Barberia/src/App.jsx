@@ -10,6 +10,7 @@ import Background from './components/ui/background';
 import Protected from './components/protected/Protected'; 
 import NotFound from './components/notFound/NotFound';       
 import ReservationsList from './components/reservations/ReservationsList'; 
+import Cart from './components/cart/Cart';
 
 function App() {
     return (
@@ -37,6 +38,8 @@ function App() {
                     </Route>
                     
                     <Route path="/reservations" element={<ReservationsList />} />
+
+                    <Route path="/cart" element={<Cart />} />
 
                     <Route path='*' element={<NotFound />} />
                 </Routes>
