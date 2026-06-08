@@ -7,11 +7,7 @@ const Product = ({ product, onDelete }) => {
             {product.map((item) => (
                 <ProductItem
                     key={item.id}
-                    id={item.id}
-                    nombre={item.name}          
-                    imageUrl={item.imageUrl}
-                    available={item.stock > 0} 
-                    summary={item.description}  
+                    item={item} 
                     onDelete={onDelete}
                 />
             ))}

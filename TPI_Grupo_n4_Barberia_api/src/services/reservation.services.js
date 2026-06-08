@@ -1,4 +1,4 @@
-import Reservation from '../models/Reservation.js';
+import Reservation from '../models/Reservation.js'
 
 // 1. Crear una nueva reserva con validación
 export const createReservation = async (req, res) => {

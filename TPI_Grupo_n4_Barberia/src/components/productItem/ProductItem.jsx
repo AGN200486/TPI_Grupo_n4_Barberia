@@ -5,20 +5,15 @@ import Card from 'react-bootstrap/Card';
 import ConfirmDeleteModal from '../ui/ConfirmDeleteModal';
 import { useAuth } from '../../context/AuthContext'; 
 
-const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => {
+const ProductItem = ({ item, onDelete }) => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const { user } = useAuth(); 
 
     const handleClick = () => {
-        navigate(`${id}`, {
+        navigate(`${item.id}`, {
             state: {
-                product: {
-                    nombre,
-                    summary,
-                    imageUrl,
-                    available,
-                },
+                product: item 
             },
         });
     };
@@ -33,25 +28,23 @@ const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => 
 
     const handleConfirmDelete = () => {
         setShowModal(false);
-        onDelete(id);
+        onDelete(item.id);
     };
 
     return (
         <>
             <Card className="mx-3 mb-4" style={{ width: '18rem' }}>
-                
                 <Card.Body>
-                    <Card.Title>{nombre}</Card.Title>
-                    <Card.Img variant="top" style={{width: "6rem", height: "5rem"}} src={imageUrl} />
+                    <Card.Title>{item.name || item.nombre}</Card.Title>
+                    <Card.Img variant="top" style={{width: "6rem", height: "5rem"}} src={item.imageUrl} />
                     <div>
-                        <p>{available ? "Disponible" : "Sin Stock"}</p>
+                        <p>{item.stock > 0 ? "Disponible" : "Sin Stock"}</p>
                     </div>
                     <div className="d-flex gap-2">
                         <Button variant="primary" onClick={handleClick}>
                             Seleccionar producto
                         </Button>
                         
-                        {/*Solo el Dueño (superadmin) puede ver y clickear para borrar */}
                         {user?.rol === 'superadmin' && (
                             <Button variant="danger" onClick={handleDeleteClick}>
                                 Eliminar
@@ -64,7 +57,7 @@ const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => 
                 show={showModal}
                 onCancel={handleCancel}
                 onConfirm={handleConfirmDelete}
-                productName={nombre}
+                productName={item.name || item.nombre}
             />
         </>
     );

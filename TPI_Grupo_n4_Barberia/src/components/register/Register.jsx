@@ -19,59 +19,73 @@ const Register = () => {
     const passwordRef = useRef(null);
 
     const handleRegister = (event) => {
-        event.preventDefault();
+    event.preventDefault();
 
-        // Validaciones básicas de negocio antes del fetch
-        if (!name.trim()) {
-            toast.warn("Por favor, ingresá tu nombre.");
-            nameRef.current.focus();
-            return;
-        }
-        if (!surname.trim()) {
-            toast.warn("Por favor, ingresá tu apellido.");
-            surnameRef.current.focus();
-            return;
-        }
-        if (password.length < 6) {
-            toast.error("La contraseña debe tener al menos 6 caracteres.");
-            passwordRef.current.focus();
-            return;
-        }
+    // 1. Validar que no haya campos vacíos o con puros espacios
+    if (!name.trim()) {
+        toast.warn("Por favor, ingresá tu nombre.");
+        nameRef.current.focus();
+        return;
+    }
+    if (!surname.trim()) {
+        toast.warn("Por favor, ingresá tu apellido.");
+        surnameRef.current.focus();
+        return;
+    }
+    if (!email.trim()) {
+        toast.warn("Por favor, ingresá tu correo electrónico.");
+        emailRef.current.focus();
+        return;
+    }
 
-        // Construimos el JSON con el rol por defecto de 'cliente'
-        const newUser = {
-            name,
-            surname,
-            email,
-            password,
-            role: "cliente" // Todo usuario registrado desde la web entra como cliente
-        };
+    // 2. Validar formato de Email real usando una Expresión Regular (Regex)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        toast.error("Por favor, ingresá un correo electrónico válido (ejemplo@dominio.com).");
+        emailRef.current.focus();
+        return;
+    }
 
-        // Promesa .then() directa al Backend al endpoint de register
-        fetch("http://localhost:3000/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newUser)
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    return res.json().then((errorData) => {
-                        throw new Error(errorData.message || "Error al registrar el usuario");
-                    });
-                }
-                return res.json();
-            })
-            .then(() => {
-                toast.success("¡Registro exitoso! Ya podés iniciar sesión.");
-                navigate("/login"); // Redirige al login de inmediato para que entre al sistema
-            })
-            .catch((err) => {
-                console.error("Error en registro:", err);
-                toast.error(err.message || "No se pudo conectar con el servidor.");
-            });
+    // 3. Validar los 7 caracteres de la contraseña (¡Acá estaba el detalle!)
+    if (password.length < 7) {
+        toast.error("La contraseña debe tener un mínimo de 7 caracteres.");
+        passwordRef.current.focus();
+        return;
+    }
+
+    // Si pasa todas las validaciones, recién ahí arma el objeto y hace el fetch
+    const newUser = {
+        name: name.trim(),
+        surname: surname.trim(),
+        email: email.trim(),
+        password,
+        role: "cliente"
     };
+
+    fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newUser)
+    })
+    .then((res) => {
+        if (!res.ok) {
+            return res.json().then((errorData) => {
+                throw new Error(errorData.message || "Error al registrar el usuario");
+            });
+        }
+        return res.json();
+    })
+    .then(() => {
+        toast.success("¡Registro exitoso! Ya podés iniciar sesión.");
+        navigate("/login");
+    })
+    .catch((err) => {
+        console.error("Error en registro:", err);
+        toast.error(err.message || "No se pudo conectar con el servidor.");
+    });
+};
 
     return (
         <Card className="m-4 w-25 mx-auto bg-dark text-white border border-secondary shadow">
@@ -119,10 +133,11 @@ const Register = () => {
                         <Form.Label>Contraseña</Form.Label>
                         <Form.Control 
                             type="password" 
-                            placeholder="Mínimo 6 caracteres" 
+                            placeholder="Mínimo 7 caracteres" 
                             value={password} 
                             onChange={(e) => setPassword(e.target.value)} 
                             ref={passwordRef}
+                            minLength={7} // 🔑 CAMBIO: Atributo HTML5 para el navegador
                             required 
                         />
                     </Form.Group>
