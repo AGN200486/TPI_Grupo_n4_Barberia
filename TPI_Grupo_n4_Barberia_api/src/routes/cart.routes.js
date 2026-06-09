@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getCart, addToCart, deleteFromCart, checkoutCart } from '../services/cart.services.js';
-import { verifyToken } from '../services/auth.services.js'; // Ajustá según tu proyecto
+import { verifyToken } from '../services/auth.services.js'; 
 
 const router = Router();
 

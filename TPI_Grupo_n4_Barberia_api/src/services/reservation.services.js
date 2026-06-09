@@ -5,12 +5,12 @@ export const createReservation = async (req, res) => {
     try {
         const { barberName, serviceName, date, time } = req.body;
         
-        // 🔑 EXTRAEMOS EL EMAIL DIRECTAMENTE DEL TOKEN DECODIFICADO POR EL MIDDLEWARE
+        //EXTRAEMOS EL EMAIL DIRECTAMENTE DEL TOKEN DECODIFICADO POR EL MIDDLEWARE
         const clientEmail = req.user.email; 
         // Como el token no tiene el nombre, usamos la primera parte del email o "Cliente Registrado"
         const clientName = req.user.email.split('@')[0]; 
 
-        // VALIDACIÓN CRÍTICA
+        //VALIDACIÓN 
         const existingReservation = await Reservation.findOne({
             where: { barberName, date, time }
         });
@@ -40,7 +40,7 @@ export const createReservation = async (req, res) => {
 // 2. Obtener reservas (Filtra si es cliente o trae todo si es Admin/Barbero)
 export const getReservations = async (req, res) => {
     try {
-        // 🔑 Leemos los datos directamente del Token verificado
+        // Leemos los datos directamente del Token verificado
         const emailToken = req.user.email;
         const roleToken = req.user.role; 
 

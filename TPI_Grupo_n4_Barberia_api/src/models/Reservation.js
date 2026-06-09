@@ -11,7 +11,7 @@ const Reservation = sequelize.define(
         },
         clientEmail: {
             type: DataTypes.STRING,
-            allowNull: false // Para saber qué cliente reservó
+            allowNull: false //Para saber qué cliente reservó
         },
         clientName: {
             type: DataTypes.STRING,
@@ -19,18 +19,18 @@ const Reservation = sequelize.define(
         },
         barberName: {
             type: DataTypes.STRING,
-            allowNull: false // "Franco", "Ezequiel", etc.
+            allowNull: false 
         },
         serviceName: {
             type: DataTypes.STRING,
-            allowNull: false // "Corte Degradé", etc.
+            allowNull: false //"Corte Degradé", etc.
         },
         date: {
-            type: DataTypes.STRING, // Formato "YYYY-MM-DD"
+            type: DataTypes.STRING, 
             allowNull: false
         },
         time: {
-            type: DataTypes.STRING, // Formato "HH:MM" (ej: "14:30")
+            type: DataTypes.STRING, 
             allowNull: false
         }
     }

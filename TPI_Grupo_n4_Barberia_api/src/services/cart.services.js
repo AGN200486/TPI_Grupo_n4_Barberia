@@ -1,6 +1,6 @@
 import Cart from "../models/Cart.js";
-import  { Product } from "../models/Product.js"; // 👈 IMPORTANTE: Asegurá que la ruta a tu modelo Product sea la correcta
-import { sequelize } from '../db.js'; // Lo importamos para poder usar transacciones seguras
+import  { Product } from "../models/Product.js"; 
+import { sequelize } from '../db.js'; 
 
 // Obtener el carro del usuario autenticado
 export const getCart = async (req, res) => {
@@ -50,7 +50,7 @@ export const deleteFromCart = async (req, res) => {
     }
 };
 
-// 🔥 RESOLVIENDO EL STOCK: Descontar de la base de datos y vaciar el carro
+// RESOLVIENDO EL STOCK: Descontar de la base de datos y vaciar el carro
 export const checkoutCart = async (req, res) => {
     // Iniciamos una transacción para asegurar que si un producto falla, no se descuente nada a medias
     const transaction = await sequelize.transaction();

@@ -7,7 +7,7 @@ const CartList = () => {
     const [cartItems, setCartItems] = useState([]);
     const [idItemAConfirmar, setIdItemAConfirmar] = useState(null);
     
-    // Estados para la simulación de la instancia de pago
+    //Estados para la simulación de la instancia de pago
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("Tarjeta de Crédito (Simulada)");
     const navigate = useNavigate();
@@ -167,12 +167,12 @@ const CartList = () => {
                             </Form.Group>
                         </Form.Group>
                         <Form.Text className="text-muted d-block mt-2">
-                            *Nota del TPI: La pasarela e ingresos de tarjeta están deshabilitados. La confirmación vaciará tu carro mediante el servicio del Backend actualizando el stock.
+                            *La confirmación vaciará tu carro mediante el servicio del Backend actualizando el stock.
                         </Form.Text>
                     </Modal.Body>
                     <Modal.Footer className="border-secondary">
                         <Button variant="secondary" onClick={() => setShowCheckoutModal(false)}>Cancelar</Button>
-                        <Button variant="success" type="submit" className="fw-bold">Confirmar Pago Simulando Éxito</Button>
+                        <Button variant="success" type="submit" className="fw-bold">Confirmar Pago</Button>
                     </Modal.Footer>
                 </Form>
             </Modal>

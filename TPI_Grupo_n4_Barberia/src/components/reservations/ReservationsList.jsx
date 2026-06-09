@@ -39,7 +39,7 @@ const ReservationsList = () => {
         fetch(`http://localhost:3000/reservations/${id}`, { 
             method: 'DELETE',
             headers: {
-                'Authorization': `Bearer ${token}` // 🔑 Llave maestra para verifyToken
+                'Authorization': `Bearer ${token}` // Llave maestra para verifyToken
             }
         })
             .then(res => {

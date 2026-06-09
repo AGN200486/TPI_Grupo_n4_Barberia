@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createReservation, getReservations, deleteReservation } from '../services/reservation.services.js';
-import { verifyToken } from '../services/auth.services.js'; // 👈 IMPORTAMOS TU MIDDLEWARE REAL
+import { verifyToken } from '../services/auth.services.js'; 
 
 const router = Router();
 
