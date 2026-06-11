@@ -126,7 +126,7 @@ const ProductDetails = () => {
 
         const bookingData = {
             barberName: barber,
-            serviceName: itemReal.name || itemReal.nombre,
+            serviceName: itemReal.name,
             date: date,
             time: time
         };
@@ -163,7 +163,7 @@ const ProductDetails = () => {
 
         const token = localStorage.getItem("token");
         const cartData = {
-            productName: itemReal.name || itemReal.nombre,
+            productName: itemReal.name,
             quantity: productQuantity,
             price: itemReal.price 
         };
@@ -189,17 +189,15 @@ const ProductDetails = () => {
 
     // Validación de tipo de ítem
     const isServiceItem = itemReal.isService === true || 
-                          itemReal.isService === 1 || 
-                          (itemReal.nombre && itemReal.nombre.toLowerCase().includes("corte")) || 
-                          (itemReal.name && itemReal.name.toLowerCase().includes("corte")) ||
-                          (itemReal.nombre && itemReal.nombre.toLowerCase().includes("barba")) || 
+                          itemReal.isService === 1 ||  
+                          (itemReal.name && itemReal.name.toLowerCase().includes("corte")) || 
                           (itemReal.name && itemReal.name.toLowerCase().includes("barba"));
 
     return (
         <Card className="m-4 w-50 mx-auto bg-dark text-white border border-secondary shadow">
             <Card.Img variant="top" src={itemReal.imageUrl || itemReal.imagen || null} style={{ maxHeight: '350px', objectFit: 'cover' }} />
             <Card.Body>
-                <h2>{itemReal.name || itemReal.nombre}</h2>
+                <h2>{itemReal.name}</h2>
                 <p className="text-muted">{itemReal.description || itemReal.summary}</p>
                 
                 {isServiceItem ? (
