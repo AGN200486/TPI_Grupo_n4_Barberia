@@ -29,7 +29,7 @@ export const registerUser = async (req, res) => {
     try {
         const { name, surname, email, password, role } = req.body;
 
-        // 🔑 VALIDACIÓN: Controlar mínimo de 7 caracteres en el registro
+        // Controlar mínimo de 7 caracteres en el registro
         if (!password || password.length < 7) {
             return res.status(400).send({ message: "La contraseña debe tener al menos 7 caracteres." });
         }
@@ -62,7 +62,7 @@ export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // 🔑 VALIDACIÓN: Controlar mínimo de 7 caracteres en el login
+        // Controlar mínimo de 7 caracteres en el login
         if (!password || password.length < 7) {
             return res.status(401).send({ message: "Email y/o contraseña incorrecta (mínimo 7 caracteres)" });
         }
@@ -99,10 +99,10 @@ export const getBarbers = async (req, res) => {
         const barbers = await User.findAll({
             where: {
                 role: {
-                    [Op.or]: ['admin', 'Admin', 'ADMIN'] // 👈 Captura cualquier variante
+                    [Op.or]: ['admin', 'Admin', 'ADMIN'] // Captura cualquier variante
                 }
             },
-            attributes: ['id', 'name', 'surname', 'email'] // 👈 Agregamos ID y Email por seguridad
+            attributes: ['id', 'name', 'surname', 'email'] // Agregamos ID y Email por seguridad
         });
         
         res.json(barbers);
