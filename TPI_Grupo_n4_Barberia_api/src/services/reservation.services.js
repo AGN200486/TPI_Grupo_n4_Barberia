@@ -1,32 +1,32 @@
 import Reservation from '../models/Reservation.js'
+import { User } from '../models/User.js'
+import { Product } from '../models/Product.js'
 
-// 1. Crear una nueva reserva con validación
+//Crear una nueva reserva con validación relacional
 export const createReservation = async (req, res) => {
     try {
-        const { barberName, serviceName, date, time } = req.body;
+        //el frontend nos debe mandar barberId y productId
+        const { barberId, productId, date, time } = req.body;
         
-        //EXTRAEMOS EL EMAIL DIRECTAMENTE DEL TOKEN DECODIFICADO POR EL MIDDLEWARE
-        const clientEmail = req.user.email; 
-        // Como el token no tiene el nombre, usamos la primera parte del email o "Cliente Registrado"
-        const clientName = req.user.email.split('@')[0]; 
+        //Extraemos el id del cliente directamente del token decodificado
+        const clientId = req.user.id; 
 
-        //VALIDACIÓN 
+        //Evitar que el mismo barbero tenga dos turnos a la misma hora el mismo día
         const existingReservation = await Reservation.findOne({
-            where: { barberName, date, time }
+            where: { barberId, date, time }
         });
 
         if (existingReservation) {
             return res.status(400).json({ 
-                message: `El barbero ${barberName} ya tiene un turno asignado para el día ${date} a las ${time} hs.` 
+                message: `El barbero seleccionado ya tiene un turno asignado para el día ${date} a las ${time} hs.` 
             });
         }
 
-        // Creamos la reserva usando los datos seguros extraídos del Token
+        //Creamos la reserva vinculando las Claves Foráneas correctas
         const newReservation = await Reservation.create({
-            clientEmail, 
-            clientName, 
-            barberName, 
-            serviceName, 
+            clientId, 
+            barberId, 
+            productId, 
             date, 
             time
         });
@@ -37,21 +37,42 @@ export const createReservation = async (req, res) => {
     }
 };
 
-// 2. Obtener reservas (Filtra si es cliente o trae todo si es Admin/Barbero)
+//Obtener reservas (Filtra si es cliente o trae todo si es Admin/Barbero) con INCLUDE relacionales
 export const getReservations = async (req, res) => {
     try {
-        // Leemos los datos directamente del Token verificado
-        const emailToken = req.user.email;
+        const userIdToken = req.user.id;
         const roleToken = req.user.role; 
 
+        //Configuración de los Includes para hacer los JOINs automáticos
+        const includeConfig = [
+            {
+                model: User,
+                as: 'client', //El alias que definimos en associations.js
+                attributes: ['name', 'surname', 'email'] //Traemos datos limpios del cliente
+            },
+            {
+                model: User,
+                as: 'barber', //El alias que definimos en associations.js
+                attributes: ['name', 'surname'] //Traemos datos limpios del barbero
+            },
+            {
+                model: Product, //Vincula el servicio de la reserva
+                attributes: ['name', 'price']
+            }
+        ];
+
         if (roleToken === 'admin' || roleToken === 'superadmin') {
-            // El Admin/Barbero ve TODOS los turnos de la barbería
-            const allReservations = await Reservation.findAll({ order: [['date', 'ASC'], ['time', 'ASC']] });
+            //El Admin/Barbero ve todos los turnos con los datos de quién atiende y quién viene
+            const allReservations = await Reservation.findAll({ 
+                include: includeConfig,
+                order: [['date', 'ASC'], ['time', 'ASC']] 
+            });
             return res.json(allReservations);
         } else {
-            // El cliente solo ve las suyas basándose en el mail de su propio Token
+            //El cliente solo ve sus propios turnos basándose en su ID del Token
             const clientReservations = await Reservation.findAll({ 
-                where: { clientEmail: emailToken },
+                where: { clientId: userIdToken },
+                include: includeConfig,
                 order: [['date', 'ASC'], ['time', 'ASC']]
             });
             return res.json(clientReservations);
@@ -61,7 +82,7 @@ export const getReservations = async (req, res) => {
     }
 };
 
-// 3. Eliminar / Cancelar Reserva
+//Eliminar / Cancelar Reserva
 export const deleteReservation = async (req, res) => {
     try {
         const { id } = req.params;

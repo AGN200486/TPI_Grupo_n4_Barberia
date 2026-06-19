@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
 export const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./products.db",
+    dialect: "sqlite",
+    storage: "./products.db",
 });
