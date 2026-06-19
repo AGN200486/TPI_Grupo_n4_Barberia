@@ -54,8 +54,7 @@ const ProductDetails = () => {
             .then(data => {
                 setBarbersList(data);
                 if (data.length > 0) {
-                    const primerBarbero = `${data[0].name || ''} ${data[0].surname || ''}`.trim() || data[0].email;
-                    setBarber(primerBarbero);
+                    setBarber(data[0].id); //Guardamos el ID del primer barbero
                 }
             })
             .catch(err => console.error("Error al cargar barberos:", err));
@@ -125,8 +124,8 @@ const ProductDetails = () => {
         const token = localStorage.getItem("token");
 
         const bookingData = {
-            barberName: barber,
-            serviceName: itemReal.name,
+            barberId: parseInt(barber, 10), //Mandamos el ID del barbero
+            productId: itemReal.id,         //Mandamos el ID del servicio
             date: date,
             time: time
         };
@@ -164,7 +163,7 @@ const ProductDetails = () => {
 
         //Mandamos el id del producto (productId)
         const bodyPayload = {
-            productId: itemReal.id,
+            productId: itemReal.id, //Mandamos el ID del producto físico
             quantity: parseInt(productQuantity, 10)
         };
 
@@ -226,14 +225,13 @@ const ProductDetails = () => {
                                     {barbersList.length === 0 ? (
                                         <option value="">No hay barberos registrados...</option>
                                     ) : (
-                                        barbersList.map((b) => {
-                                            const nombreCompleto = `${b.name || ''} ${b.surname || ''}`.trim() || b.email;
-                                            return (
-                                                <option key={b.id} value={nombreCompleto}>
-                                                    {nombreCompleto}
-                                                </option>
-                                            );
-                                        })
+
+                                        barbersList.map((b) => (
+                                            <option key={b.id} value={b.id}> {/*El value es el ID numérico*/}
+                                                {`${b.name || ''} ${b.surname || ''}`.trim() || b.email}
+                                            </option>
+                                        ))
+
                                     )}
                                 </Form.Select>
                             </Form.Group>
