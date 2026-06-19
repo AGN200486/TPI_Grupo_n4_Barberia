@@ -55,10 +55,13 @@ const CartList = () => {
             });
     };
 
-    // Calcular el total general sumando (precio * cantidad) de cada fila
-    const totalCart = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    //Calcula el total leyendo el objeto Product que incluyó Sequelize
+    const totalCart = cartItems.reduce((acc, item) => {
+        const precio = item.Product?.price || 0;
+        return acc + (precio * item.quantity);
+    }, 0);
 
-    // Procesar el pago definitivo e impactar stock en Backend
+    //Procesar el pago definitivo e impactar stock en Backend
     const handleProcessPayment = (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
@@ -75,8 +78,8 @@ const CartList = () => {
             
             toast.success(`¡Pago confirmado mediante ${paymentMethod}! Tu pedido está en preparación.`);
             setShowCheckoutModal(false);
-            setCartItems([]); // Limpiamos el carro localmente
-            navigate("/library"); // Redirige al catálogo
+            setCartItems([]); //Limpiamos el carro localmente
+            navigate("/library"); //Redirige al catálogo
         })
         .catch(err => toast.error(err.message));
     };
@@ -103,30 +106,38 @@ const CartList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cartItems.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.productName}</td>
-                                    <td className="text-center fw-bold">{item.quantity}</td>
-                                    <td>${item.price}</td>
-                                    <td className="text-success fw-bold">${item.price * item.quantity}</td>
-                                    <td className="text-center">
-                                        {idItemAConfirmar === item.id ? (
-                                            <div className="d-flex gap-2 justify-content-center">
-                                                <Button variant="danger" size="sm" onClick={() => handleConfirmDelete(item.id)}>
-                                                    Confirmar
+                            {cartItems.map((item) => {
+                                //Extraemos el objeto Product para renderizar más limpio
+                                const productoData = item.Product || {};
+                                const precioUnitario = productoData.price || 0;
+
+                                return (
+                                    <tr key={item.id}>
+                                        {/*Renderiza el nombre desde la relación*/}
+                                        <td>{productoData.name || "Producto no disponible"}</td>
+                                        <td className="text-center fw-bold">{item.quantity}</td>
+                                        {/*Renderiza el precio desde la relación*/}
+                                        <td>${precioUnitario}</td>
+                                        <td className="text-success fw-bold">${precioUnitario * item.quantity}</td>
+                                        <td className="text-center">
+                                            {idItemAConfirmar === item.id ? (
+                                                <div className="d-flex gap-2 justify-content-center">
+                                                    <Button variant="danger" size="sm" onClick={() => handleConfirmDelete(item.id)}>
+                                                        Confirmar
+                                                    </Button>
+                                                    <Button variant="secondary" size="sm" onClick={() => setIdItemAConfirmar(null)}>
+                                                        Volver
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <Button variant="outline-danger" size="sm" onClick={() => setIdItemAConfirmar(item.id)}>
+                                                    Eliminar
                                                 </Button>
-                                                <Button variant="secondary" size="sm" onClick={() => setIdItemAConfirmar(null)}>
-                                                    Volver
-                                                </Button>
-                                            </div>
-                                        ) : (
-                                            <Button variant="outline-danger" size="sm" onClick={() => setIdItemAConfirmar(item.id)}>
-                                                Eliminar
-                                            </Button>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </Table>
 

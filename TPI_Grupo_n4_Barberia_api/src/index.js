@@ -1,5 +1,6 @@
 import express from "express";
 import { runSeed } from "./seeder.js";
+import { setupAssociations } from "./models/associations.js";
 import { PORT } from "./config.js";
 import { sequelize } from "./db.js";
 
@@ -37,6 +38,7 @@ app.use(cartRoutes);
 //Función asíncrona principal para inicializar la API de forma segura
 const startServer = async () => {
     try {
+        setupAssociations();
         //Conectar y sincronizar Base de Datos de manera segura
         await sequelize.sync({ alter: true }); //'alter: true' cuida tus datos guardados ante cambios estructurales
         console.log("Database synchronized successfully.");
