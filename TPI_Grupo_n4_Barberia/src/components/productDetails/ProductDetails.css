@@ -1,0 +1,197 @@
+/* Tarjeta Principal de Detalle */
+.barber-details-card {
+    width: 100%;
+    max-width: 620px;
+    background-color: rgba(22, 16, 12, 0.9) !important;
+    backdrop-filter: blur(8px);
+    border: 2px solid var(--border, #362920) !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Envoltura e Imagen Superior */
+.barber-details-img-wrapper {
+    width: 100%;
+    height: 320px;
+    background-color: rgba(14, 10, 7, 0.6);
+    border-bottom: 2px solid var(--border, #362920);
+    overflow: hidden;
+}
+
+.barber-details-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Títulos y Descripciones */
+.barber-details-title {
+    font-family: var(--heading, 'Georgia', serif);
+    color: var(--text-h, #f5ece3);
+    font-size: 2.1rem;
+    font-weight: 700;
+}
+
+.barber-details-desc {
+    color: var(--text, #a19288);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Línea divisoria e inicio del flujo de reserva/compra */
+.barber-section-flow {
+    border-top: 1px dashed rgba(87, 67, 53, 0.5) !important;
+}
+
+.flow-section-subtitle {
+    font-family: var(--heading, 'Georgia', serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.flow-section-subtitle.service-theme {
+    color: var(--accent, #c59b27);
+}
+
+.flow-section-subtitle.product-theme {
+    color: #e5b83b;
+}
+
+.duration-tag {
+    font-size: 0.9rem;
+    color: var(--text, #a19288);
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Controles de Formularios Estilo Industrial */
+.barber-form-label {
+    color: var(--text-h, #f5ece3);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.barber-form-select, 
+.barber-form-control {
+    background-color: rgba(14, 10, 7, 0.7) !important;
+    border: 1px solid var(--border, #362920) !important;
+    color: #f5ece3 !important;
+    padding: 10px 12px;
+    border-radius: 4px;
+}
+
+.barber-form-select:focus, 
+.barber-form-control:focus {
+    border-color: var(--accent, #c59b27) !important;
+    box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.25) !important;
+}
+
+/* Contenedor de Precios de Productos */
+.barber-product-pricing {
+    background-color: rgba(14, 10, 7, 0.5);
+    border-left: 3px solid var(--accent, #c59b27);
+}
+
+.pricing-stock {
+    color: var(--text, #a19288);
+    font-size: 0.95rem;
+}
+
+.pricing-value {
+    color: var(--text-h, #f5ece3);
+    font-size: 1.2rem;
+}
+
+.pricing-value span {
+    color: #4cd137;
+    font-weight: 700;
+}
+
+/* Alertas de Error Personalizadas */
+.barber-alert-danger {
+    background-color: rgba(139, 37, 30, 0.2) !important;
+    border: 1px solid #8b251e !important;
+    color: #f5ece3 !important;
+    font-size: 0.9rem;
+}
+
+.barber-feedback-invalid {
+    color: #e74c3c !important;
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+
+.btn-barber-action {
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease-out !important;
+}
+
+/* Botón de Turnos (Bronce Viejo) */
+.btn-barber-action.confirm-theme {
+    background-color: var(--accent, #c59b27) !important;
+    border: 1px solid var(--accent, #c59b27) !important;
+    color: #120c08 !important;
+}
+
+.btn-barber-action.confirm-theme:hover:not(:disabled) {
+    background-color: var(--accent-hover, #e5b83b) !important;
+    border-color: var(--accent-hover, #e5b83b) !important;
+}
+
+/* Botón de Productos (Bronce Dorado Claro) */
+.btn-barber-action.product-theme-btn {
+    background-color: #e5b83b !important;
+    border: 1px solid #e5b83b !important;
+    color: #120c08 !important;
+}
+
+.btn-barber-action.product-theme-btn:hover:not(:disabled) {
+    background-color: #f3c95a !important;
+    border-color: #f3c95a !important;
+}
+
+.btn-barber-action:disabled {
+    background-color: rgba(54, 41, 32, 0.4) !important;
+    border-color: rgba(54, 41, 32, 0.4) !important;
+    color: rgba(161, 146, 136, 0.4) !important;
+    cursor: not-allowed;
+}
+
+/* Botón Volver (Negro/Gris Minimalista) */
+.btn-barber-back {
+    background-color: transparent !important;
+    border: 1px solid var(--border, #362920) !important;
+    color: var(--text, #a19288) !important;
+    padding: 10px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.btn-barber-back:hover {
+    background-color: rgba(54, 41, 32, 0.2) !important;
+    color: var(--text-h, #f5ece3) !important;
+    border-color: var(--text, #a19288) !important;
+}
+
+/* Soporte completo para pantallas pequeñas */
+@media (max-width: 576px) {
+    .barber-details-card {
+        margin-inline: 12px;
+    }
+    .barber-details-img-wrapper {
+        height: 220px;
+    }
+    .barber-details-title {
+        font-size: 1.7rem;
+    }
+}

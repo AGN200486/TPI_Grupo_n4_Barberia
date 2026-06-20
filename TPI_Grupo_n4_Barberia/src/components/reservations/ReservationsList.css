@@ -1,0 +1,132 @@
+/* Contenedor Principal de Reservas */
+.barber-reservations-container {
+    background-color: rgba(22, 16, 12, 0.9);
+    backdrop-filter: blur(8px);
+    border: 2px solid var(--border, #362920);
+    border-radius: 8px;
+    color: #f5ece3;
+}
+
+/* Título de la sección */
+.barber-reservations-title {
+    font-family: var(--heading, 'Georgia', serif);
+    color: var(--text-h, #f5ece3);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Texto de advertencia si la lista está vacía */
+.barber-no-reservations {
+    color: var(--text, #a19288);
+    font-style: italic;
+}
+
+/* Estilos de la Tabla Base */
+.barber-table {
+    margin-bottom: 0;
+    color: #f5ece3 !important;
+    border-color: #362920 !important;
+}
+
+/* Cabeceras de la tabla */
+.barber-table thead th {
+    background-color: #16100c !important;
+    color: var(--accent, #c59b27) !important;
+    font-family: var(--heading, 'Georgia', serif);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 10px;
+    border-bottom: 2px solid #c59b27 !important;
+}
+
+/* Filas e Celdas del Cuerpo */
+.barber-table tbody tr {
+    background-color: rgba(14, 10, 7, 0.5) !important;
+    transition: background-color 0.2s ease;
+}
+
+/* Efecto Zebra manual alternado */
+.barber-table tbody tr:nth-of-type(odd) {
+    background-color: rgba(26, 19, 14, 0.5) !important;
+}
+
+/* Hover en las filas */
+.barber-table tbody tr:hover {
+    background-color: rgba(54, 41, 32, 0.4) !important;
+}
+
+.barber-table tbody td {
+    padding: 14px 10px;
+    border-color: #362920 !important;
+    font-size: 0.95rem;
+}
+
+/* Ancho fijo para la cabecera de acciones */
+.barber-actions-header {
+    width: 200px;
+}
+
+/* Variaciones de colores semánticos dentro de la tabla */
+.barber-table-muted {
+    color: rgba(161, 146, 136, 0.7) !important;
+}
+
+.barber-service-name {
+    color: var(--accent, #c59b27) !important;
+    font-weight: 600;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+
+/* Botón "Cancelar Turno" / "Dar de Baja" Inicial */
+.btn-barber-action-trigger {
+    background-color: transparent !important;
+    border: 1px solid #dc3545 !important;
+    color: #dc3545 !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease-out;
+}
+
+.btn-barber-action-trigger:hover {
+    background-color: #dc3545 !important;
+    color: #f5ece3 !important;
+}
+
+/* Botón de Confirmación Real (Rojo Sólido) */
+.btn-barber-confirm-delete {
+    background-color: #bd2130 !important;
+    border: 1px solid #bd2130 !important;
+    color: #f5ece3 !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease-out;
+}
+
+.btn-barber-confirm-delete:hover {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+/* Botón "Volver" de arrepentimiento */
+.btn-barber-cancel-back {
+    background-color: #362920 !important;
+    border: 1px solid #362920 !important;
+    color: #f5ece3 !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease-out;
+}
+
+.btn-barber-cancel-back:hover {
+    background-color: #523e30 !important;
+    border-color: #523e30 !important;
+}

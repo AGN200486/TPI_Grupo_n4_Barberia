@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Table, Button, Container, Row, Col, Modal, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import "./Cart.css"; // Importamos su hoja de estilos premium
 
 const CartList = () => {
     const [cartItems, setCartItems] = useState([]);
     const [idItemAConfirmar, setIdItemAConfirmar] = useState(null);
     
-    //Estados para la simulación de la instancia de pago
+    // Estados para la simulación de la instancia de pago
     const [showCheckoutModal, setShowCheckoutModal] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("Tarjeta de Crédito (Simulada)");
     const navigate = useNavigate();
@@ -55,13 +56,13 @@ const CartList = () => {
             });
     };
 
-    //Calcula el total leyendo el objeto Product que incluyó Sequelize
+    // Calcula el total leyendo el objeto Product que incluyó Sequelize
     const totalCart = cartItems.reduce((acc, item) => {
         const precio = item.Product?.price || 0;
         return acc + (precio * item.quantity);
     }, 0);
 
-    //Procesar el pago definitivo e impactar stock en Backend
+    // Procesar el pago definitivo e impactar stock en Backend
     const handleProcessPayment = (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
@@ -78,24 +79,24 @@ const CartList = () => {
             
             toast.success(`¡Pago confirmado mediante ${paymentMethod}! Tu pedido está en preparación.`);
             setShowCheckoutModal(false);
-            setCartItems([]); //Limpiamos el carro localmente
-            navigate("/library"); //Redirige al catálogo
+            setCartItems([]); // Limpiamos el carro localmente
+            navigate("/library"); // Redirige al catálogo
         })
         .catch(err => toast.error(err.message));
     };
 
     return (
-        <Container className="mt-4 p-4 bg-dark text-white rounded border border-secondary shadow">
-            <h2 className="mb-4 text-center">Mi Carro de Compras</h2>
+        <Container className="cart-container mt-5 p-4 rounded shadow">
+            <h2 className="cart-title mb-4 text-center">Mi Carro de Compras</h2>
 
             {cartItems.length === 0 ? (
-                <div className="text-center p-4">
-                    <p className="text-muted fs-5">Tu carro está vacío actualmente.</p>
-                    <Button variant="outline-success" onClick={() => navigate("/library")}>Ir a la Tienda</Button>
+                <div className="text-center p-5 empty-cart-box">
+                    <p className="fs-5 mb-4">Tu carro está vacío actualmente.</p>
+                    <Button className="btn-gold-outline" onClick={() => navigate("/library")}>Ir a la Tienda</Button>
                 </div>
             ) : (
                 <>
-                    <Table striped bordered hover variant="dark" responsive className="align-middle">
+                    <Table responsive className="cart-table align-middle">
                         <thead>
                             <tr>
                                 <th>Producto</th>
@@ -107,30 +108,27 @@ const CartList = () => {
                         </thead>
                         <tbody>
                             {cartItems.map((item) => {
-                                //Extraemos el objeto Product para renderizar más limpio
                                 const productoData = item.Product || {};
                                 const precioUnitario = productoData.price || 0;
 
                                 return (
                                     <tr key={item.id}>
-                                        {/*Renderiza el nombre desde la relación*/}
-                                        <td>{productoData.name || "Producto no disponible"}</td>
-                                        <td className="text-center fw-bold">{item.quantity}</td>
-                                        {/*Renderiza el precio desde la relación*/}
+                                        <td className="product-name">{productoData.name || "Producto no disponible"}</td>
+                                        <td className="text-center fw-bold product-qty">{item.quantity}</td>
                                         <td>${precioUnitario}</td>
-                                        <td className="text-success fw-bold">${precioUnitario * item.quantity}</td>
+                                        <td className="price-highlight">${precioUnitario * item.quantity}</td>
                                         <td className="text-center">
                                             {idItemAConfirmar === item.id ? (
                                                 <div className="d-flex gap-2 justify-content-center">
-                                                    <Button variant="danger" size="sm" onClick={() => handleConfirmDelete(item.id)}>
+                                                    <Button className="btn-danger-custom" size="sm" onClick={() => handleConfirmDelete(item.id)}>
                                                         Confirmar
                                                     </Button>
-                                                    <Button variant="secondary" size="sm" onClick={() => setIdItemAConfirmar(null)}>
+                                                    <Button className="btn-secondary-custom" size="sm" onClick={() => setIdItemAConfirmar(null)}>
                                                         Volver
                                                     </Button>
                                                 </div>
                                             ) : (
-                                                <Button variant="outline-danger" size="sm" onClick={() => setIdItemAConfirmar(item.id)}>
+                                                <Button className="btn-danger-outline" size="sm" onClick={() => setIdItemAConfirmar(item.id)}>
                                                     Eliminar
                                                 </Button>
                                             )}
@@ -141,12 +139,12 @@ const CartList = () => {
                         </tbody>
                     </Table>
 
-                    <Row className="mt-4 pt-3 border-top border-secondary align-items-center">
-                        <Col>
-                            <h4 className="text-muted">Total de la orden: <span className="text-success fw-bold">${totalCart}</span></h4>
+                    <Row className="mt-4 pt-4 border-top-barber align-items-center">
+                        <Col xs={12} md={6} className="text-center text-md-start mb-3 mb-md-0">
+                            <h4 className="total-label">Total de la orden: <span className="price-highlight">${totalCart}</span></h4>
                         </Col>
-                        <Col className="text-end">
-                            <Button variant="success" size="lg" className="fw-bold px-5" onClick={() => setShowCheckoutModal(true)}>
+                        <Col xs={12} md={6} className="text-center text-md-end">
+                            <Button className="btn-gold px-5 py-2 fs-5" onClick={() => setShowCheckoutModal(true)}>
                                 Proceder al Pago
                             </Button>
                         </Col>
@@ -154,36 +152,40 @@ const CartList = () => {
                 </>
             )}
 
-            <Modal show={showCheckoutModal} onHide={() => setShowCheckoutModal(false)} centered contentClassName="bg-dark text-white border border-secondary">
-                <Modal.Header closeButton closeVariant="white" className="border-secondary">
-                    <Modal.Title className="text-success">Instancia de Pago - Checkout</Modal.Title>
+            {/* Modal de checkout */}
+            <Modal 
+                show={showCheckoutModal} 
+                onHide={() => setShowCheckoutModal(false)} 
+                centered 
+                dialogClassName="barber-modal"
+            >
+                <Modal.Header closeButton closeVariant="white">
+                    <Modal.Title>Instancia de Pago - Checkout</Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={handleProcessPayment}>
                     <Modal.Body>
-                        <p>Estás a punto de confirmar la compra de tus insumos de barbería.</p>
-                        <h5 className="mb-4">Monto Final a Abonar: <span className="text-success fw-bold">${totalCart}</span></h5>
+                        <p className="modal-description">Estás a punto de confirmar la compra de tus insumos de barbería.</p>
+                        <h5 className="mb-4 modal-total">Monto Final a Abonar: <span className="price-highlight">${totalCart}</span></h5>
                         
                         <Form.Group className="mb-3">
-                            <Form.Group className="mb-3">
-                                <Form.Label className="fw-bold">Seleccioná un método de simulación:</Form.Label>
-                                <Form.Select 
-                                    className="bg-secondary text-white border-0"
-                                    value={paymentMethod}
-                                    onChange={e => setPaymentMethod(e.target.value)}
-                                >
-                                    <option value="Tarjeta de Crédito (Simulada)">Tarjeta de Crédito / Débito (Mock)</option>
-                                    <option value="Mercado Pago (Simulado)">Mercado Pago (Alias/CVU Mock)</option>
-                                    <option value="Efectivo en el Local">Abonar en el local al retirar</option>
-                                </Form.Select>
-                            </Form.Group>
+                            <Form.Label className="fw-bold label-custom">Seleccioná un método de simulación:</Form.Label>
+                            <Form.Select 
+                                className="select-custom"
+                                value={paymentMethod}
+                                onChange={e => setPaymentMethod(e.target.value)}
+                            >
+                                <option value="Tarjeta de Crédito (Simulada)">Tarjeta de Crédito / Débito (Mock)</option>
+                                <option value="Mercado Pago (Simulado)">Mercado Pago (Alias/CVU Mock)</option>
+                                <option value="Efectivo en el Local">Abonar en el local al retirar</option>
+                            </Form.Select>
                         </Form.Group>
-                        <Form.Text className="text-muted d-block mt-2">
-                            *La confirmación vaciará tu carro mediante el servicio del Backend actualizando el stock.
+                        <Form.Text className="text-muted-custom d-block mt-3">
+                            *La confirmación vaciará tu carro mediante el servicio del Backend actualizando el stock real en la Base de Datos.
                         </Form.Text>
                     </Modal.Body>
-                    <Modal.Footer className="border-secondary">
-                        <Button variant="secondary" onClick={() => setShowCheckoutModal(false)}>Cancelar</Button>
-                        <Button variant="success" type="submit" className="fw-bold">Confirmar Pago</Button>
+                    <Modal.Footer>
+                        <Button className="btn-secondary-custom" onClick={() => setShowCheckoutModal(false)}>Cancelar</Button>
+                        <Button className="btn-gold" type="submit">Confirmar Pago</Button>
                     </Modal.Footer>
                 </Form>
             </Modal>

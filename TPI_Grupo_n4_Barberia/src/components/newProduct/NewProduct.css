@@ -1,0 +1,122 @@
+/* Contenedor con espaciado para que no pegue contra los bordes del layout */
+.new-product-container {
+    padding: 20px 0;
+}
+
+/* Tarjeta del Formulario (Madera ahumada / Cuero oscuro con desenfoque) */
+.new-product-card {
+    width: 100%;
+    max-width: 580px; /* Un poco más ancho que el login para acomodar el Row de inputs */
+    background-color: rgba(22, 16, 12, 0.85) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border, #362920) !important;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Título de la tarjeta (Estilo Serif/Georgia elegante) */
+.new-product-title {
+    font-family: var(--heading, 'Georgia', serif);
+    color: var(--text-h, #f5ece3);
+    font-size: 1.65rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(54, 41, 32, 0.5);
+    padding-bottom: 12px;
+}
+
+/* Etiquetas de los campos */
+.new-product-label {
+    color: var(--text, #a19288);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+/* Campos de texto y textareas oscurecidos */
+.new-product-input {
+    background-color: rgba(14, 10, 7, 0.7) !important;
+    border: 1px solid var(--border, #362920) !important;
+    color: var(--text-h, #f5ece3) !important;
+    font-size: 0.95rem;
+    padding: 9px 12px;
+    transition: all 0.3s ease;
+}
+
+.new-product-input:focus {
+    background-color: rgba(14, 10, 7, 0.9) !important;
+    border-color: var(--accent, #c59b27) !important;
+    box-shadow: 0 0 8px rgba(197, 155, 39, 0.25) !important;
+}
+
+/* Placeholders con opacidad intermedia */
+.new-product-input::placeholder {
+    color: rgba(161, 146, 136, 0.35) !important;
+}
+
+/* Selector desplegable (Select) personalizado */
+.new-product-select {
+    background-color: rgba(14, 10, 7, 0.75) !important;
+    border: 1px solid var(--border, #362920) !important;
+    color: var(--text-h, #f5ece3) !important;
+    font-size: 0.95rem;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.new-product-select:focus {
+    border-color: var(--accent, #c59b27) !important;
+    box-shadow: 0 0 8px rgba(197, 155, 39, 0.25) !important;
+}
+
+/* Estilo para las opciones dentro del selector */
+.new-product-select option {
+    background-color: #16100c !important;
+    color: var(--text-h, #f5ece3);
+}
+
+/* --- BOTONES --- */
+
+/* Botón Guardar (Bronce sofisticado) */
+.btn-new-product-submit {
+    background-color: var(--accent, #c59b27) !important;
+    border: 1px solid var(--accent, #c59b27) !important;
+    color: #120c08 !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 9px 20px;
+    transition: all 0.3s ease !important;
+}
+
+.btn-new-product-submit:hover {
+    background-color: var(--accent-hover, #e5b83b) !important;
+    border-color: var(--accent-hover, #e5b83b) !important;
+    box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Botón Cancelar/Volver (Sobrio, gris oscuro integrado) */
+.btn-new-product-cancel {
+    background-color: transparent !important;
+    border: 1px solid var(--border, #362920) !important;
+    color: var(--text, #a19288) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 9px 20px;
+    transition: all 0.3s ease !important;
+}
+
+.btn-new-product-cancel:hover {
+    background-color: var(--border, #362920) !important;
+    color: var(--text-h, #f5ece3) !important;
+}
+
+/* Ajustes de responsividad */
+@media (max-width: 576px) {
+    .new-product-card {
+        max-width: 100%;
+        margin-inline: 10px;
+    }
+}

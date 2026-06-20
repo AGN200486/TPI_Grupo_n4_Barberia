@@ -1,0 +1,101 @@
+/* Contenedor envolvente del Dashboard */
+.dashboard-wrapper {
+    background-color: rgba(18, 12, 8, 0.45); /* Sombra sutil para despegar el contenido del fondo general */
+    backdrop-filter: blur(4px); /* Suaviza la imagen de fondo de la app */
+}
+
+/* Área superior de botones */
+.dashboard-actions {
+    border-bottom: 1px solid rgba(54, 41, 32, 0.4);
+    margin-bottom: 15px;
+}
+
+/* Título de la marca principal */
+.dashboard-main-title {
+    font-family: var(--heading, 'Georgia', serif);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-h, #f5ece3);
+    letter-spacing: 4px;
+    text-shadow: 2px 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Subtítulo de gestión */
+.dashboard-subtitle {
+    color: var(--text, #a19288);
+    font-size: 1.05rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    margin-bottom: 25px;
+}
+
+/* Títulos de secciones (Servicios / Productos) */
+.section-title {
+    font-family: var(--heading, 'Georgia', serif);
+    font-size: 1.65rem;
+    color: var(--accent, #c59b27); /* Tono bronce de la iluminación */
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border, #362920);
+}
+
+/* Ajuste cuando está centrado el título */
+.text-center.section-title {
+    display: inline-block;
+    width: auto;
+    margin: 0 auto;
+    padding-inline: 20px;
+}
+
+/* --- BOTONES DE ACCIONES --- */
+
+/* Botón Agregar Ítem (Dorado/Bronce sofisticado) */
+.btn-gold-admin {
+    background-color: var(--accent, #c59b27) !important;
+    border: 1px solid var(--accent, #c59b27) !important;
+    color: #120c08 !important; /* Texto oscuro */
+    font-weight: 700 !important;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 16px;
+    transition: all 0.3s ease !important;
+}
+
+.btn-gold-admin:hover {
+    background-color: var(--accent-hover, #e5b83b) !important;
+    border-color: var(--accent-hover, #e5b83b) !important;
+    box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Botón Cerrar Sesión (Estilo sobrio e integrado) */
+.btn-logout {
+    background-color: transparent !important;
+    border: 1px solid var(--border, #362920) !important;
+    color: var(--text, #a19288) !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    transition: all 0.3s ease !important;
+}
+
+.btn-logout:hover {
+    background-color: var(--border, #362920) !important;
+    color: var(--text-h, #f5ece3) !important;
+    border-color: var(--border, #362920) !important;
+}
+
+/* Responsividad para pantallas más chicas */
+@media (max-width: 768px) {
+    .dashboard-main-title {
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+    }
+    
+    .section-title {
+        font-size: 1.35rem;
+    }
+}

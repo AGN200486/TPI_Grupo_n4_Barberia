@@ -23,29 +23,37 @@ const Header = () => {
             {/* El nav se va a ir por completo a la derecha gracias al flexbox */}
             <nav>
                 <div className="d-flex gap-4 align-items-center">
-                    <span className="text-white text-decoration-none nav-item" onClick={() => navigate("/library")}>
+                    {user && (
+                    <span className="text-white text-decoration-none nav-item fw-bold" onClick={() => navigate("/library")}>
                         <img src={tijera} alt="tijera" className="tijera-icon" />
                         Inicio
                     </span>
-                    <span className="text-white text-decoration-none nav-item" onClick={() => navigate("/library?tipo=servicios")}>
+                    )}
+
+                    {user && (
+                    <span className="text-white text-decoration-none nav-item fw-bold" onClick={() => navigate("/library?tipo=servicios")}>
                         <img src={tijera} alt="tijera" className="tijera-icon" />
                         Servicios
                     </span>
-                    <span className="text-white text-decoration-none nav-item" onClick={() => navigate("/library?tipo=productos")}>
+                    )}
+
+                    {user && (
+                    <span className="text-white text-decoration-none nav-item fw-bold" onClick={() => navigate("/library?tipo=productos")}>
                         <img src={tijera} alt="tijera" className="tijera-icon" />
                         Productos
                     </span>
+                    )}
 
                     {/* 📅 NUEVOS BOTONES: Solo se renderizan si hay un usuario logueado en el sistema */}
                     {user && (
-                        <span className="text-white text-decoration-none nav-item fw-bold text-success" onClick={() => navigate("/reservations")}>
+                        <span className="text-white text-decoration-none nav-item fw-bold" onClick={() => navigate("/reservations")}>
                             <img src={carro} alt="carro" className="carro-icon" />
                             Reservas {isAdmin ? "(Panel)" : ""}
                         </span>
                     )}
 
                     {user && (
-                        <span className="text-white text-decoration-none nav-item fw-bold text-success" onClick={() => navigate("/cart")}>
+                        <span className="text-white text-decoration-none nav-item fw-bold" onClick={() => navigate("/cart")}>
                             <img src={carro} alt="carro" className="carro-icon" />
                             Carro {isAdmin ? "(Panel)" : ""}
                         </span>

@@ -41,7 +41,7 @@ export const runSeed = async () => {
                 },
                 {
                     name: "Carlos Dueño",
-                    email: "dueño@barberia.com",
+                    email: "duenio@barberia.com",
                     password: passSuperAdmin,
                     role: "superadmin" 
                 }

@@ -1,10 +1,10 @@
 .background {
-    background-color: rgb(141, 63, 0);
+    background-color: linear-gradient(rgba(19, 14, 10, 0.85), rgba(19, 14, 10, 0.95));
     background-image: url('../../imagenes/foto1.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     
-    min-height: 100vh;
+    min-height: 40vh;
     
 }
