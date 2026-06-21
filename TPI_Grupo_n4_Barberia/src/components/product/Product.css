@@ -1,0 +1,31 @@
+/* Contenedor de la grilla de productos y servicios */
+.product-grid-container {
+    gap: 25px; /* Espaciado uniforme y elegante entre las tarjetas */
+    padding: 15px 0;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Animación sutil de entrada para que las tarjetas no aparezcan de golpe */
+.product-grid-container > * {
+    animation: fadeInGrid 0.4s ease-out both;
+}
+
+@keyframes fadeInGrid {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustes de espaciado para pantallas táctiles o más pequeñas */
+@media (max-width: 576px) {
+    .product-grid-container {
+        gap: 15px;
+        padding-inline: 5px;
+    }
+}

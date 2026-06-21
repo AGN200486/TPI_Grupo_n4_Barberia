@@ -1,0 +1,89 @@
+/* Contenedor principal centrado y con desenfoque sobre el fondo de la app */
+.notfound-container {
+    min-height: calc(85vh - 80px);
+    padding: 30px 20px;
+}
+
+/* Tarjeta contenedora estilo cuero gastado / madera de roble ahumado */
+.notfound-card {
+    width: 100%;
+    max-width: 550px;
+    background-color: rgba(22, 16, 12, 0.9) !important;
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--border, #362920) !important;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* El número gigante del error con tipografía rústica e impactante */
+.notfound-code {
+    font-family: var(--heading, 'Georgia', serif);
+    font-size: 6.5rem;
+    font-weight: 900;
+    color: rgba(197, 155, 39, 0.15); /* Efecto marca de agua de fondo */
+    letter-spacing: 4px;
+    margin-bottom: -40px; /* Superpone el título arriba del número */
+    user-select: none;
+}
+
+/* Título principal de la alerta */
+.notfound-title {
+    font-family: var(--heading, 'Georgia', serif);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-h, #f5ece3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    position: relative;
+    z-index: 1;
+}
+
+/* Cuerpo del texto explicativo */
+.notfound-text {
+    color: var(--text, #a19288);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 420px;
+    font-style: italic;
+}
+
+/* Botón de rescate (Bronce / Dorado viejo pulido) */
+.btn-notfound-recover {
+    background-color: var(--accent, #c59b27) !important;
+    border: 1px solid var(--accent, #c59b27) !important;
+    color: #120c08 !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border-radius: 4px;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.btn-notfound-recover:hover {
+    background-color: var(--accent-hover, #e5b83b) !important;
+    border-color: var(--accent-hover, #e5b83b) !important;
+    box-shadow: 0 6px 20px rgba(197, 155, 39, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Animación y adaptabilidad para celulares */
+@media (max-width: 576px) {
+    .notfound-card {
+        padding: 40px 20px !important;
+        margin-inline: 15px;
+    }
+    .notfound-code {
+        font-size: 4.5rem;
+        margin-bottom: -25px;
+    }
+    .notfound-title {
+        font-size: 1.8rem;
+    }
+    .notfound-text {
+        font-size: 0.95rem;
+    }
+}

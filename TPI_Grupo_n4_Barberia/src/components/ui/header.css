@@ -1,51 +1,54 @@
 .header {
-    background-color: #1c1e25;
-    color: gray;
-    padding: 1rem;
+    background-color: var(--bg-surface);
+    border-bottom: 2px solid var(--border-color);
+    padding: 1.2rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .logo {
-    width: 100px;
+    width: 250px;
     height: auto;
+    filter: drop-shadow(0px 0px 4px rgba(197, 155, 39, 0.3)); /* Brillo dorado sutil al logo */
 }
 
-/*Contenedor izquierdo para que logo y h1 no se separen*/
 .header-left {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espacio entre el logo y el h1*/
+    gap: 15px;
 }
 
 .header-left h1 {
-    color: white;
+    color: var(--text-light);
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    font-family: 'Georgia', serif; /* Una fuente con serifa le da el toque clásico de barbería */
+    letter-spacing: 1px;
 }
 
-/*Estilo para cada botón interactivo*/
+/* Ajuste de los botones del menú de navegación */
 .nav-item {
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px; /* Espacio entre la tijera y la palabra */
-    font-size: 1.1rem;
-    transition: opacity 0.2s;
+    gap: 8px;
+    font-size: 1rem;
+    text-transform: uppercase; /* Queda más imponente y prolijo */
+    letter-spacing: 1px;
+    color: var(--accent-gold) !important; /* Chau verde, hola dorado */
+    transition: all 0.3s ease;
 }
 
 .nav-item:hover {
-    opacity: 0.8; /* Efecto sutil cuando pasan el mouse*/
+    color: var(--text-light) !important;
+    transform: translateY(-1px);
 }
 
-/*Estilo para controlar el tamaño de la tijera al lado del texto*/
-.tijera-icon {
-    width: 18px;
+.tijera-icon, .carro-icon {
+    width: 16px;
     height: auto;
-}
-/*Estilo para controlar el tamaño del carrito al lado del texto*/
-.carro-icon {
-    width: 18px;
-    height: auto;
+    /* Este filtro cambia el color de tus iconos negros/oscuros a un tono bronce/dorado */
+    filter: sepia(1) saturate(5) hue-rotate(15deg); 
 }

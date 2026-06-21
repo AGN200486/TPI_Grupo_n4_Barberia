@@ -1,0 +1,121 @@
+/* Tarjeta de Producto/Servicio (Estilo marco antiguo / cuero oscuro) */
+.barber-item-card {
+    width: 17rem;
+    background-color: rgba(22, 16, 12, 0.85) !important;
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--border, #362920) !important;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* Efecto de elevación elegante al pasar el mouse */
+.barber-item-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent, #c59b27) !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Contenedor de la imagen (Efecto marco de foto/espejo) */
+.barber-item-img-wrapper {
+    background-color: rgba(14, 10, 7, 0.5);
+    height: 160px;
+    padding: 15px;
+    border-bottom: 1px solid rgba(54, 41, 32, 0.4);
+    overflow: hidden;
+}
+
+/* Imagen fluida con esquinas suavizadas */
+.barber-item-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    transition: transform 0.4s ease;
+}
+
+.barber-item-card:hover .barber-item-img {
+    transform: scale(1.04);
+}
+
+/* Título del Producto (Estilo Serif refinado) */
+.barber-item-title {
+    font-family: var(--heading, 'Georgia', serif);
+    color: var(--text-h, #f5ece3);
+    font-size: 1.15rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badges de Estado (Stock) */
+.barber-stock-badge {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.stock-available {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #4cd137;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.stock-empty {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #e74c3c;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+/* --- BOTONES --- */
+
+/* Botón principal de selección (Bronce pulido) */
+.btn-barber-select {
+    background-color: var(--accent, #c59b27) !important;
+    border: 1px solid var(--accent, #c59b27) !important;
+    color: #120c08 !important;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease !important;
+}
+
+.btn-barber-select:hover {
+    background-color: var(--accent-hover, #e5b83b) !important;
+    border-color: var(--accent-hover, #e5b83b) !important;
+    transform: translateY(-1px);
+}
+
+/* Botón de borrado para Admin (Gris oscuro/Rojo opaco integrado) */
+.btn-barber-delete {
+    background-color: transparent !important;
+    border: 1px solid rgba(231, 76, 60, 0.4) !important;
+    color: #e74c3c !important;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease !important;
+}
+
+.btn-barber-delete:hover {
+    background-color: #8b251e !important;
+    border-color: #8b251e !important;
+    color: #f5ece3 !important;
+}
+
+/* Ajuste responsive para grillas muy compactas */
+@media (max-width: 576px) {
+    .barber-item-card {
+        width: 100%;
+        max-width: 280px;
+    }
+}

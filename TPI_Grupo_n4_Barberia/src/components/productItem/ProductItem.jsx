@@ -4,21 +4,20 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import ConfirmDeleteModal from '../ui/ConfirmDeleteModal';
 import { useAuth } from '../../context/AuthContext'; 
+import "./ProductItem.css"; // Importamos su hoja de estilos dedicada
 
-const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => {
+// Recibimos 'item' (el objeto completo de la DB) enviado por el padre (Product.jsx)
+const ProductItem = ({ item, onDelete }) => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-    const { user } = useAuth(); 
+    const { user } = useAuth(); // Traemos el usuario logueado para verificar su rol
 
+    // Función que se activa al tocar "Ver Detalles / Reservar"
     const handleClick = () => {
-        navigate(`${id}`, {
+        // Viajamos a la pantalla de detalle usando el ID del producto en la URL
+        navigate(`${item.id}`, {
             state: {
-                product: {
-                    nombre,
-                    summary,
-                    imageUrl,
-                    available,
-                },
+                product: item // Mandamos el 'item' completo para la pantalla de detalles
             },
         });
     };
@@ -33,38 +32,57 @@ const ProductItem = ({ id, nombre, imageUrl, available, summary, onDelete }) => 
 
     const handleConfirmDelete = () => {
         setShowModal(false);
-        onDelete(id);
+        onDelete(item.id); // Avisamos al padre que borre este ID de la lista
     };
 
     return (
         <>
-            <Card className="mx-3 mb-4" style={{ width: '18rem' }}>
+            <Card className="barber-item-card shadow">
+                <div className="barber-item-img-wrapper d-flex align-items-center justify-content-center">
+                    <Card.Img 
+                        variant="top" 
+                        src={item.imageUrl || "https://via.placeholder.com/150?text=Barber+Shop"} 
+                        className="barber-item-img"
+                    />
+                </div>
                 
-                <Card.Body>
-                    <Card.Title>{nombre}</Card.Title>
-                    <Card.Img variant="top" style={{width: "6rem", height: "5rem"}} src={imageUrl} />
+                <Card.Body className="d-flex flex-column justify-content-between p-3">
                     <div>
-                        <p>{available ? "Disponible" : "Sin Stock"}</p>
+                        <Card.Title className="barber-item-title text-center mb-2">
+                            {item.name}
+                        </Card.Title>
+                        
+                        {!item.isService && (
+                            <div className="text-center mb-3">
+                                {/* Validación visual rápida de disponibilidad */}
+                                <span className={`barber-stock-badge ${item.stock > 0 ? "stock-available" : "stock-empty"}`}>
+                                    {item.stock > 0 ? "Disponible" : "Sin Stock"}
+                                </span>
+                            </div>
+                        )}
                     </div>
-                    <div className="d-flex gap-2">
-                        <Button variant="primary" onClick={handleClick}>
-                            Seleccionar producto
+
+                    <div className="d-flex flex-column gap-2 mt-2">
+                        <Button className="btn-barber-select w-100" onClick={handleClick}>
+                            {item.isService ? "Reservar Turno" : "Ver Producto"}
                         </Button>
                         
-                        {/*Solo el Dueño (superadmin) puede ver y clickear para borrar */}
+                        {/* Solo el dueño de la barbería (superadmin) puede ver este botón de borrar */}
                         {user?.rol === 'superadmin' && (
-                            <Button variant="danger" onClick={handleDeleteClick}>
-                                Eliminar
+                            <Button className="btn-barber-delete w-100" onClick={handleDeleteClick}>
+                                Eliminar Ítem
                             </Button>
                         )}
                     </div>
                 </Card.Body>
             </Card>
+
+            {/* Modal flotante que salta para confirmar la eliminación */}
             <ConfirmDeleteModal
                 show={showModal}
                 onCancel={handleCancel}
                 onConfirm={handleConfirmDelete}
-                productName={nombre}
+                productName={item.name}
             />
         </>
     );

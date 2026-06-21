@@ -1,11 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Op } from "sequelize"; 
 import { User } from "../models/User.js";
 
-//la clave secreta
+// la clave secreta
 const SECRET_KEY = "BarberiaTPI_Grupo4_SecretKey_2026";
 
-//Middleware para verificar el token en las rutas protegidas
+// Middleware para verificar el token en las rutas protegidas
 export const verifyToken = (req, res, next) => {
     const header = req.header("Authorization") || "";
     const token = header.split(" ")[1];
@@ -23,10 +24,15 @@ export const verifyToken = (req, res, next) => {
     }
 };
 
-//Registrar un nuevo usuario en la barbería
+// Registrar un nuevo usuario en la barbería
 export const registerUser = async (req, res) => {
     try {
         const { name, surname, email, password, role } = req.body;
+
+        // Controlar mínimo de 7 caracteres en el registro
+        if (!password || password.length < 7) {
+            return res.status(400).send({ message: "La contraseña debe tener al menos 7 caracteres." });
+        }
 
         const user = await User.findOne({ where: { email } });
         if (user) {
@@ -41,8 +47,8 @@ export const registerUser = async (req, res) => {
             name,
             surname,
             email,
-            password: hashedPassword, //contrasea hasheada
-            role: role || "cliente" //cliente es el rol default
+            password: hashedPassword, // contraseña hasheada
+            role: role || "cliente" // cliente es el rol default
         });
 
         res.json({ id: newUser.id, message: "Usuario registrado con éxito." });
@@ -51,10 +57,15 @@ export const registerUser = async (req, res) => {
     }
 };
 
-//Iniciar Sesión (Login)
+// Iniciar Sesión (Login)
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        // Controlar mínimo de 7 caracteres en el login
+        if (!password || password.length < 7) {
+            return res.status(401).send({ message: "Email y/o contraseña incorrecta (mínimo 7 caracteres)" });
+        }
 
         const user = await User.findOne({ where: { email } });
         if (!user) {
@@ -72,7 +83,7 @@ export const loginUser = async (req, res) => {
             { expiresIn: "1h" }
         );
 
-        //DEVUELVE EL TOKEN Y EL ROL DE LA BASE DE DATOS
+        // DEVUELVE EL TOKEN Y EL ROL DE LA BASE DE DATOS
         return res.json({
             token: token,
             role: user.role
@@ -80,5 +91,22 @@ export const loginUser = async (req, res) => {
         
     } catch (error) {
         res.status(500).send({ message: "Error en el login: " + error.message });
+    }
+};
+
+export const getBarbers = async (req, res) => {
+    try {
+        const barbers = await User.findAll({
+            where: {
+                role: {
+                    [Op.or]: ['admin', 'Admin', 'ADMIN'] // Captura cualquier variante
+                }
+            },
+            attributes: ['id', 'name', 'surname', 'email'] // Agregamos ID y Email por seguridad
+        });
+        
+        res.json(barbers);
+    } catch (error) {
+        res.status(500).send({ message: "Error al obtener los barberos: " + error.message });
     }
 };

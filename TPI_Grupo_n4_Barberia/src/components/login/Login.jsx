@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
-import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { Button, Card, Form, FormGroup } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext"; 
 import { toast } from "react-toastify"; 
+import "../Login&Register.css";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        //Validaciones
+        // Validaciones
         if (!email.length) {
             setErrors({ email: true, password: false });
             toast.error("¡Debes completar el email para iniciar sesión!"); 
@@ -36,6 +37,7 @@ const Login = () => {
             return;
         }
 
+        // Validación unificada a mínimo 7 caracteres
         if (!password.length || password.length < 7) {
             setErrors({ email: false, password: true });
             toast.error("¡La contraseña debe tener mínimo 7 caracteres!"); 
@@ -43,7 +45,7 @@ const Login = () => {
             return;
         }
 
-        //Petición HTTP 
+        // Petición HTTP 
         fetch("http://localhost:3000/login", {
             method: "POST",
             headers: {
@@ -55,13 +57,13 @@ const Login = () => {
                 if (!res.ok) {
                     throw new Error("Credenciales incorrectas o usuario no existente");
                 }
-                return res.json(); //Leemos el objeto { token, role } del backend
+                return res.json(); // Leemos el objeto { token, role } del backend
             })
             .then((data) => {
                 setErrors({ email: false, password: false });
                 toast.success("¡Inicio de sesión exitoso!");
 
-                //Impactamos el token y el rol real en el contexto global
+                // Impactamos el token y el rol real en el contexto global
                 login(data.token, data.role); 
 
                 navigate("/library"); 
@@ -73,47 +75,60 @@ const Login = () => {
     };
 
     return (
-        <Card className="m-4 w-25 mx-auto bg-dark text-white border border-secondary shadow">
-            <Card.Body>
-                <h3 className="text-center mb-4">Iniciar Sesión</h3>
-                <Form onSubmit={handleSubmit}>
-                    <FormGroup className="mb-3">
-                        <Form.Control
-                            type="email"
-                            placeholder="Ingresar email"
-                            onChange={handleEmailChange}
-                            ref={emailRef}
-                            value={email}
-                            className={errors.email ? "border border-danger" : ""}
-                        />
-                        {errors.email && <p className="text-danger mt-1 mb-0">Debes completar el email para iniciar sesión.</p>}
-                    </FormGroup>
-                    
-                    <FormGroup className="mb-4 mt-3">
-                        <Form.Control
-                            type="password"
-                            placeholder="Ingresar contraseña"
-                            onChange={handlePasswordChange}
-                            ref={passwordRef}
-                            value={password}
-                            className={errors.password ? "border border-danger" : ""}
-                        />
-                        {errors.password && <p className="text-danger mt-1 mb-0">Debes completar la contraseña, mínimo 7 caracteres.</p>}
-                    </FormGroup>
-                    
-                    <Row>
-                        <Col className="d-flex justify-content-center">
-                            <Button variant="primary" type="submit" className="w-100">
-                                Entrar
+        <div className="login-container d-flex align-items-center justify-content-center">
+            <Card className="login-card shadow">
+                <Card.Body className="p-4">
+                    <h3 className="login-title text-center mb-4">Iniciar Sesión</h3>
+                    <Form onSubmit={handleSubmit}>
+                        <FormGroup className="mb-3">
+                            <Form.Label className="login-label">Correo Electrónico</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Ingresar email"
+                                onChange={handleEmailChange}
+                                ref={emailRef}
+                                value={email}
+                                className={`login-input ${errors.email ? "login-input-error" : ""}`}
+                                required
+                            />
+                            {errors.email && <p className="login-error-text mt-1 mb-0">Debes completar el email para iniciar sesión.</p>}
+                        </FormGroup>
+                        
+                        <FormGroup className="mb-3">
+                            <Form.Label className="login-label">Contraseña</Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Mínimo 7 caracteres"
+                                onChange={handlePasswordChange}
+                                ref={passwordRef}
+                                value={password}
+                                className={`login-input ${errors.password ? "login-input-error" : ""}`}
+                                minLength={7} // 🔑 Atributo HTML5 para coincidir con la restricción
+                                required
+                            />
+                            {errors.password && <p className="login-error-text mt-1 mb-0">Debes completar la contraseña, mínimo 7 caracteres.</p>}
+                        </FormGroup>
+                        
+                        {/* Botones en formato bloque integrados con la estética rústica */}
+                        <div className="d-grid gap-2 mt-4">
+                            {/* Botón de envío clásico (submit) */}
+                            <Button className="btn-barber-login-submit" type="submit">
+                                Ingresar
                             </Button>
-                            <Button variant="link" className="text-muted text-decoration-none p-0 mt-3 d-block mx-auto" onClick={() => navigate("/register")}>
-                                ¿No tenés cuenta todavía? Registrate gratis acá
+                            
+                            {/* Enlace de redirección */}
+                            <Button 
+                                variant="link" 
+                                className="btn-barber-login-link" 
+                                onClick={() => navigate("/register")}
+                            >
+                                ¿No tenés cuenta? Registrate acá
                             </Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Card.Body>
-        </Card>
+                        </div>
+                    </Form>
+                </Card.Body>
+            </Card>
+        </div>
     );
 };
 

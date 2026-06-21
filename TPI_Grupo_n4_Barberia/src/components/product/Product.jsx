@@ -1,17 +1,14 @@
 import React from 'react';
 import ProductItem from '../productItem/ProductItem';
+import "./Product.css"; // Importamos su hoja de estilos dedicada
 
 const Product = ({ product, onDelete }) => {
     return (
-        <div className="d-flex justify-content-center flex-wrap">
+        <div className="product-grid-container d-flex justify-content-center flex-wrap">
             {product.map((item) => (
                 <ProductItem
                     key={item.id}
-                    id={item.id}
-                    nombre={item.name}          
-                    imageUrl={item.imageUrl}
-                    available={item.stock > 0} 
-                    summary={item.description}  
+                    item={item} 
                     onDelete={onDelete}
                 />
             ))}
