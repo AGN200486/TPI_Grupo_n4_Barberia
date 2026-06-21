@@ -1,5 +1,17 @@
-/* Contenedor Principal de Reservas */
-.barber-reservations-container {
+/* Contenedor exterior: Asegura el 100% del ancho del Layout y activa el centrado horizontal*/
+.barber-reservations-page {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important; /*Clava la tabla en el centro horizontal*/
+    align-items: flex-start !important; /*Permite que la tabla empiece arriba y crezca hacia abajo*/
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+/* Contenedor Principal de Reservas*/
+.barber-reservations-page .barber-reservations-container {
+    width: 100%;
+    max-width: 1000px; /*Evita que la tabla se deforme a lo ancho en monitores muy grandes*/
     background-color: rgba(22, 16, 12, 0.9);
     backdrop-filter: blur(8px);
     border: 2px solid var(--border, #362920);
