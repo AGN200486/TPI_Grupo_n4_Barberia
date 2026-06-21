@@ -1,10 +1,15 @@
-/* Contenedor principal centrado y con desenfoque sobre el fondo de la app */
+/* Contenedor principal: Centrado absoluto horizontal y vertical */
 .notfound-container {
+    width: 100% !important;
     min-height: calc(85vh - 80px);
-    padding: 30px 20px;
+    padding: 40px 20px;
+    display: flex !important;
+    justify-content: center !important; /* Centrado horizontal */
+    align-items: flex-start !important; /* Lo alinea arriba para que no se hunda */
+    box-sizing: border-box;
 }
 
-/* Tarjeta contenedora estilo cuero gastado / madera de roble ahumado */
+/*Tarjeta contenedora estilo cuero gastado / madera de roble ahumado */
 .notfound-card {
     width: 100%;
     max-width: 550px;
@@ -15,6 +20,7 @@
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85) !important;
     position: relative;
     overflow: hidden;
+    margin: 0 auto !important; /* Asegura el equilibrio en layouts rotos */
 }
 
 /* El número gigante del error con tipografía rústica e impactante */
@@ -39,16 +45,20 @@
     z-index: 1;
 }
 
-/* Cuerpo del texto explicativo */
+/*Cuerpo del texto explicativo */
 .notfound-text {
     color: var(--text, #a19288);
     font-size: 1.05rem;
     line-height: 1.6;
-    max-width: 420px;
+    max-width: 440px;
+    margin-inline: auto; /*Centra el bloque contenedor en la tarjeta*/
+    text-align: center;  /*Centra el texto en sí mismo*/
     font-style: italic;
+    position: relative;
+    z-index: 2;
 }
 
-/* Botón de rescate (Bronce / Dorado viejo pulido) */
+/*Botón de rescate*/
 .btn-notfound-recover {
     background-color: var(--accent, #c59b27) !important;
     border: 1px solid var(--accent, #c59b27) !important;

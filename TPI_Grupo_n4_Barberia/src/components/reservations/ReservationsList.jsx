@@ -7,7 +7,7 @@ import "./ReservationsList.css"; // 🔑 Integración de la hoja de estilos dedi
 const ReservationsList = () => {
     const { user } = useAuth();
     const [reservations, setReservations] = useState([]);
-    
+
     // Estado para guardar el ID de la reserva que se está queriendo cancelar
     const [idReservaAConfirmar, setIdReservaAConfirmar] = useState(null);
 
@@ -15,9 +15,9 @@ const ReservationsList = () => {
     const isAdmin = user?.role === 'admin' || user?.role === 'superadmin' || user?.rol === 'admin' || user?.rol === 'superadmin';
 
     const loadReservations = () => {
-        const token = localStorage.getItem("token"); 
+        const token = localStorage.getItem("token");
         if (!token) return;
-        
+
         fetch(`http://localhost:3000/reservations`, {
             method: 'GET',
             headers: {
@@ -58,91 +58,93 @@ const ReservationsList = () => {
     };
 
     return (
-        <Container className="barber-reservations-container shadow my-5 p-4">
-            <h2 className="barber-reservations-title mb-4 text-center">Gestión de Turnos y Reservas</h2>
-            
-            {reservations.length === 0 ? (
-                <p className="barber-no-reservations text-center fs-5 my-4">
-                    No hay reservas registradas en este momento.
-                </p>
-            ) : (
-                <Table responsive bordered className="barber-table align-middle">
-                    <thead>
-                        <tr>
-                            {/* Si es Admin, mostramos de qué cliente es el turno */}
-                            {isAdmin && <th>Cliente</th>}
-                            {isAdmin && <th>Email Cliente</th>}
-                            <th>Barbero Asignado</th>
-                            <th>Servicio / Corte</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th className="barber-actions-header text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {reservations.map((res) => {
-                            // Mapeo dinámico de los datos incluidos por Sequelize
-                            const clienteData = res.client || {};
-                            const barberoData = res.barber || {};
-                            const productoData = res.Product || {};
+        <div className="barber-reservations-page d-flex justify-content-center align-items-center">
+            <Container className="barber-reservations-container shadow my-5 p-4">
+                <h2 className="barber-reservations-title mb-4 text-center">Gestión de Turnos y Reservas</h2>
 
-                            return (
-                                <tr key={res.id}>
-                                    {/* Renderiza desde los objetos incluidos */}
-                                    {isAdmin && (
-                                        <td>
-                                            {`${clienteData.name || 'Cliente'} ${clienteData.surname || ''}`.trim()}
-                                        </td>
-                                    )}
-                                    {isAdmin && (
-                                        <td className="barber-table-muted">
-                                            {clienteData.email || "Sin email"}
-                                        </td>
-                                    )}
-                                    
-                                    <td>
-                                        {`Barbero ${barberoData.name || 'Asignado'} ${barberoData.surname || ''}`.trim()}
-                                    </td>
-                                    <td className="barber-service-name">
-                                        {productoData.name || "Servicio no disponible"}
-                                    </td>
-                                    <td>{res.date}</td>
-                                    <td>{res.time} hs</td>
-                                    <td className="text-center">
-                                        {idReservaAConfirmar === res.id ? (
-                                            <div className="d-flex gap-2 justify-content-center">
-                                                <Button 
-                                                    className="btn-barber-confirm-delete" 
-                                                    size="sm" 
-                                                    onClick={() => handleConfirmDelete(res.id)}
-                                                >
-                                                    Confirmar
-                                                </Button>
-                                                <Button 
-                                                    className="btn-barber-cancel-back" 
-                                                    size="sm" 
-                                                    onClick={() => setIdReservaAConfirmar(null)}
-                                                >
-                                                    Volver
-                                                </Button>
-                                            </div>
-                                        ) : (
-                                            <Button 
-                                                className="btn-barber-action-trigger" 
-                                                size="sm" 
-                                                onClick={() => setIdReservaAConfirmar(res.id)}
-                                            >
-                                                {isAdmin ? "Dar de Baja" : "Cancelar Turno"}
-                                            </Button>
+                {reservations.length === 0 ? (
+                    <p className="barber-no-reservations text-center fs-5 my-4">
+                        No hay reservas registradas en este momento.
+                    </p>
+                ) : (
+                    <Table responsive bordered className="barber-table align-middle">
+                        <thead>
+                            <tr>
+                                {/* Si es Admin, mostramos de qué cliente es el turno */}
+                                {isAdmin && <th>Cliente</th>}
+                                {isAdmin && <th>Email Cliente</th>}
+                                <th>Barbero Asignado</th>
+                                <th>Servicio / Corte</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th className="barber-actions-header text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {reservations.map((res) => {
+                                // Mapeo dinámico de los datos incluidos por Sequelize
+                                const clienteData = res.client || {};
+                                const barberoData = res.barber || {};
+                                const productoData = res.Product || {};
+
+                                return (
+                                    <tr key={res.id}>
+                                        {/* Renderiza desde los objetos incluidos */}
+                                        {isAdmin && (
+                                            <td>
+                                                {`${clienteData.name || 'Cliente'} ${clienteData.surname || ''}`.trim()}
+                                            </td>
                                         )}
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            )}
-        </Container>
+                                        {isAdmin && (
+                                            <td className="barber-table-muted">
+                                                {clienteData.email || "Sin email"}
+                                            </td>
+                                        )}
+
+                                        <td>
+                                            {`Barbero ${barberoData.name || 'Asignado'} ${barberoData.surname || ''}`.trim()}
+                                        </td>
+                                        <td className="barber-service-name">
+                                            {productoData.name || "Servicio no disponible"}
+                                        </td>
+                                        <td>{res.date}</td>
+                                        <td>{res.time} hs</td>
+                                        <td className="text-center">
+                                            {idReservaAConfirmar === res.id ? (
+                                                <div className="d-flex gap-2 justify-content-center">
+                                                    <Button
+                                                        className="btn-barber-confirm-delete"
+                                                        size="sm"
+                                                        onClick={() => handleConfirmDelete(res.id)}
+                                                    >
+                                                        Confirmar
+                                                    </Button>
+                                                    <Button
+                                                        className="btn-barber-cancel-back"
+                                                        size="sm"
+                                                        onClick={() => setIdReservaAConfirmar(null)}
+                                                    >
+                                                        Volver
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <Button
+                                                    className="btn-barber-action-trigger"
+                                                    size="sm"
+                                                    onClick={() => setIdReservaAConfirmar(res.id)}
+                                                >
+                                                    {isAdmin ? "Dar de Baja" : "Cancelar Turno"}
+                                                </Button>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                )}
+            </Container>
+        </div>
     );
 };
 

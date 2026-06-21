@@ -1,4 +1,32 @@
-/* Contenedor Principal (Estilo panel de madera oscura de fondo) */
+/*Contenedor Exterior: Rompe el colapso del layout y activa el Flexbox maestro*/
+.barber-cart-page {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important; /*Centra horizontalmente*/
+    align-items: center !important;     /*Centra verticalmente si sobra espacio*/
+    padding: 30px 0;
+    box-sizing: border-box;
+}
+
+/*Forzamos que el contenedor del carrito mantenga una proporción estética y centrada */
+.barber-cart-page .cart-container {
+    width: 100% !important;
+    max-width: 850px; /*Un ancho ideal para que la tabla de productos quede bien sin estirarse al infinito*/
+    min-width: 290px;
+    margin: 0 auto !important; /*Refuerzo de centrado */
+}
+
+/*Ajuste responsivo para que en celulares no se pegue a los bordes*/
+@media (max-width: 768px) {
+    .barber-cart-page {
+        padding: 15px 10px;
+    }
+    .barber-cart-page .cart-container {
+        margin-inline: 12px !important;
+    }
+}
+
+/*Contenedor Principal (Estilo panel de madera oscura de fondo) */
 .cart-container {
     background-color: var(--bg-surface, #211914);
     border: 1px solid var(--border, #362920);

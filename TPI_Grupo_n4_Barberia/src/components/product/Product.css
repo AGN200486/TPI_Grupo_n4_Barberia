@@ -1,31 +1,56 @@
-/* Contenedor de la grilla de productos y servicios */
-.product-grid-container {
-    gap: 25px; /* Espaciado uniforme y elegante entre las tarjetas */
-    padding: 15px 0;
-    margin-bottom: 20px;
+/*Contenedor general de la sección*/
+.seccion-catalogo-barberia.barber-seccion-contenedor {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: block; 
+}
+
+/*Fuerza a que se pongan uno al lado del otro */
+.seccion-catalogo-barberia .barber-grid-directa {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; 
+    justify-content: center;
+    justify-items: center; 
     width: 100%;
 }
 
-/* Animación sutil de entrada para que las tarjetas no aparezcan de golpe */
-.product-grid-container > * {
-    animation: fadeInGrid 0.4s ease-out both;
+/*Item contenedor de la tarjeta individual con animación*/
+.seccion-catalogo-barberia .barber-grid-item {
+    width: 100%;
+    max-width: 320px; 
+    animation: fadeInGridDirecto 0.4s ease-out both;
 }
 
-@keyframes fadeInGrid {
+/*Títulos Principales*/
+.seccion-catalogo-barberia .barber-section-title {
+    font-family: var(--heading, 'Georgia', serif);
+    color: var(--accent, #c59b27);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    margin-top: 20px;
+}
+
+.seccion-catalogo-barberia .barber-title-divider {
+    width: 60px;
+    height: 2px;
+    background-color: var(--accent, #c59b27);
+    opacity: 0.6;
+    margin-bottom: 25px;
+}
+
+@keyframes fadeInGridDirecto {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(12px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-/* Ajustes de espaciado para pantallas táctiles o más pequeñas */
-@media (max-width: 576px) {
-    .product-grid-container {
-        gap: 15px;
-        padding-inline: 5px;
     }
 }

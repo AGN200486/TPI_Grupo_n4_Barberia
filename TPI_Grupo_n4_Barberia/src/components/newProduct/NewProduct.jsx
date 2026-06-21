@@ -69,7 +69,7 @@ const NewProduct = ({ onProductAdded }) => {
     };
 
     return (
-        <div className="new-product-container d-flex align-items-center justify-content-center">
+        <div className="barber-new-product-page new-product-container d-flex align-items-center justify-content-center">
             <Card className="new-product-card shadow">
                 <Card.Body className="p-4">
                     <h4 className="new-product-title mb-4 text-center">Agregar Nuevo Ítem</h4>

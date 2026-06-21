@@ -6,20 +6,20 @@ import ProductDetails from '../productDetails/ProductDetails';
 import NewProduct from '../newProduct/NewProduct';
 import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
-import "./Dashboard.css"; // Importamos su hoja de estilos dedicada
+import "./Dashboard.css"; //Importamos su hoja de estilos dedicada
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
     
     const [searchParams] = useSearchParams();
-    // Captura "servicios", "productos" o cae en "todos" si se hace clic en Inicio
+    //Captura "servicios", "productos" o cae en "todos" si se hace clic en Inicio
     const filtro = searchParams.get('tipo') || 'todos'; 
 
     const navigate = useNavigate();
-    const { user, logout } = useAuth(); // Traemos el usuario logueado del contexto
+    const { user, logout } = useAuth(); //Traemos el usuario logueado del contexto
 
-    // Cargar catálogo inicial
+    //Cargar catálogo inicial
     useEffect(() => {
         fetch('http://localhost:3000/products', {
             method: 'GET'
@@ -41,7 +41,7 @@ const Dashboard = () => {
             });
     }, []);
 
-    // Esta función se llamará desde NewProduct cuando inserte con éxito en la API
+    //Esta función se llamará desde NewProduct cuando inserte con éxito en la API
     const handleProductAdded = () => {
         fetch('http://localhost:3000/products')
             .then((res) => res.json())
@@ -52,7 +52,7 @@ const Dashboard = () => {
             .catch((err) => console.log(err));
     };
 
-    // PETICIÓN DELETE: Elimina físicamente el producto/servicio usando su ID 
+    //Peticion delete: Elimina físicamente el producto/servicio usando su ID 
     const handleDeleteProduct = (id) => {
         fetch(`http://localhost:3000/products/${id}`, {
             method: 'DELETE',
@@ -62,7 +62,7 @@ const Dashboard = () => {
                     throw new Error('No se pudo eliminar el ítem');
                 }
 
-                // Filtramos el estado local para que desaparezca de la pantalla al instante
+                //Filtramos el estado local para que desaparezca de la pantalla al instante
                 setProducts((prevProducts) => prevProducts.filter((p) => p.id !== id));
                 setServices((prevServices) => prevServices.filter((s) => s.id !== id));
                 toast.success('Ítem eliminado correctamente');
@@ -86,7 +86,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard-wrapper container mt-3 p-3 rounded">
             <div className="dashboard-actions d-flex justify-content-end gap-2 p-2">
-                {/* CONTROL DE PERMISOS: Solo admin o superadmin ven el botón de agregar */}
+                {/*Control de permisos: Solo admin o superadmin ven el botón de agregar*/}
                 {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
                     <Button className="btn-gold-admin" onClick={handleNavigateAddProduct}>
                         + Agregar Ítem
@@ -105,25 +105,18 @@ const Dashboard = () => {
                     index
                     element={
                         <div className="mt-4">
-                            {/* Ajuste de Filtro: Evalúa lo que manda el hook real useSearchParams */}
+                            {/*Mandamos cada lista limpia a su propia sección independiente*/}
                             {filtro === 'servicios' && (
-                                <>
-                                    <h4 className="section-title mb-4 text-center">Nuestros Servicios</h4>
-                                    <Product product={services} onDelete={handleDeleteProduct} />
-                                </>
+                                <Product product={services} onDelete={handleDeleteProduct} tipoSeccion="servicios" />
                             )}
                             {filtro === 'productos' && (
-                                <>
-                                    <h4 className="section-title mb-4 text-center">Productos en Venta</h4>
-                                    <Product product={products} onDelete={handleDeleteProduct} />
-                                </>
+                                <Product product={products} onDelete={handleDeleteProduct} tipoSeccion="productos" />
                             )}
                             {filtro === 'todos' && (
                                 <>
-                                    <h4 className="section-title mb-4">Servicios Especiales</h4>
-                                    <Product product={services} onDelete={handleDeleteProduct} />
-                                    <h4 className="section-title mt-5 mb-4">Línea de Productos</h4>
-                                    <Product product={products} onDelete={handleDeleteProduct} />
+                                    {/*Renderizamos el mismo componente dos veces, pasándole la lista correspondiente*/}
+                                    <Product product={services} onDelete={handleDeleteProduct} tipoSeccion="servicios" />
+                                    <Product product={products} onDelete={handleDeleteProduct} tipoSeccion="productos" />
                                 </>
                             )}
                         </div>

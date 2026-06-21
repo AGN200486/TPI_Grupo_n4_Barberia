@@ -195,153 +195,156 @@ const ProductDetails = () => {
         (itemReal.name && itemReal.name.toLowerCase().includes("barba"));
 
     return (
-        <Card className="barber-details-card shadow my-4 mx-auto">
-            <div className="barber-details-img-wrapper">
-                <Card.Img 
-                    variant="top" 
-                    src={itemReal.imageUrl || itemReal.imagen || "https://via.placeholder.com/600x350?text=Barber+Shop"} 
-                    className="barber-details-img"
-                />
-            </div>
-            
-            <Card.Body className="p-4">
-                <h2 className="barber-details-title">{itemReal.name}</h2>
-                <p className="barber-details-desc">{itemReal.description || itemReal.summary}</p>
+        /*Envolvemos la Card con este div maestro para forzar el comportamiento Flexbox */
+        <div className="barber-details-page d-flex justify-content-center align-items-center">
+            <Card className="barber-details-card shadow my-4 ">
+                <div className="barber-details-img-wrapper">
+                    <Card.Img
+                        variant="top"
+                        src={itemReal.imageUrl || itemReal.imagen || "https://via.placeholder.com/600x350?text=Barber+Shop"}
+                        className="barber-details-img"
+                    />
+                </div>
 
-                {isServiceItem ? (
-                    /* Sección para reservar turnos */
-                    <Form onSubmit={handleBooking} className="barber-section-flow mt-4 pt-3">
-                        <h4 className="flow-section-subtitle service-theme mb-3">
-                            Agendar Turno Premium <span className="duration-tag">(30 min)</span>
-                        </h4>
+                <Card.Body className="p-4">
+                    <h2 className="barber-details-title">{itemReal.name}</h2>
+                    <p className="barber-details-desc">{itemReal.description || itemReal.summary}</p>
 
-                        {barbersList.length === 0 && (
-                            <Alert variant="danger" className="barber-alert-danger">
-                                No hay profesionales disponibles en este momento.
-                            </Alert>
-                        )}
+                    {isServiceItem ? (
+                        /* Sección para reservar turnos */
+                        <Form onSubmit={handleBooking} className="barber-section-flow mt-4 pt-3">
+                            <h4 className="flow-section-subtitle service-theme mb-3">
+                                Agendar Turno Premium <span className="duration-tag">(30 min)</span>
+                            </h4>
 
-                        <Row className="mb-3">
-                            <Form.Group as={Col} xs={12}>
-                                <Form.Label className="barber-form-label">Elegí tu Barbero</Form.Label>
-                                <Form.Select
-                                    className="barber-form-select"
-                                    value={barber}
-                                    onChange={e => setBarber(e.target.value)}
-                                    required
-                                    disabled={barbersList.length === 0}
-                                >
-                                    {barbersList.length === 0 ? (
-                                        <option value="">No hay barberos registrados...</option>
-                                    ) : (
-                                        barbersList.map((b) => (
-                                            <option key={b.id} value={b.id}>
-                                                {`${b.name || ''} ${b.surname || ''}`.trim() || b.email}
-                                            </option>
-                                        ))
-                                    )}
-                                </Form.Select>
-                            </Form.Group>
-                        </Row>
+                            {barbersList.length === 0 && (
+                                <Alert variant="danger" className="barber-alert-danger">
+                                    No hay profesionales disponibles en este momento.
+                                </Alert>
+                            )}
 
-                        <Row className="mb-3">
-                            <Form.Group as={Col} sm={6} xs={12} className="mb-3 mb-sm-0">
-                                <Form.Label className="barber-form-label">Fecha del Turno</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    className="barber-form-control"
-                                    value={date}
-                                    onChange={handleDateChange}
-                                    required
-                                    isInvalid={!!dateError}
-                                />
-                                <Form.Control.Feedback type="invalid" className="barber-feedback-invalid">
-                                    {dateError}
-                                </Form.Control.Feedback>
-                            </Form.Group>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} xs={12}>
+                                    <Form.Label className="barber-form-label">Elegí tu Barbero</Form.Label>
+                                    <Form.Select
+                                        className="barber-form-select"
+                                        value={barber}
+                                        onChange={e => setBarber(e.target.value)}
+                                        required
+                                        disabled={barbersList.length === 0}
+                                    >
+                                        {barbersList.length === 0 ? (
+                                            <option value="">No hay barberos registrados...</option>
+                                        ) : (
+                                            barbersList.map((b) => (
+                                                <option key={b.id} value={b.id}>
+                                                    {`${b.name || ''} ${b.surname || ''}`.trim() || b.email}
+                                                </option>
+                                            ))
+                                        )}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Row>
 
-                            <Form.Group as={Col} sm={6} xs={12}>
-                                <Form.Label className="barber-form-label">Hora Disponible</Form.Label>
-                                <Form.Select
-                                    className="barber-form-select"
-                                    value={time}
-                                    onChange={e => setTime(e.target.value)}
-                                    required
-                                    disabled={!!dateError || timeSlots.length === 0}
-                                >
-                                    {timeSlots.length === 0 ? (
-                                        <option value="">Elegí una fecha primero...</option>
-                                    ) : (
-                                        timeSlots.map(slot => <option key={slot} value={slot}>{slot} hs</option>)
-                                    )}
-                                </Form.Select>
-                            </Form.Group>
-                        </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} sm={6} xs={12} className="mb-3 mb-sm-0">
+                                    <Form.Label className="barber-form-label">Fecha del Turno</Form.Label>
+                                    <Form.Control
+                                        type="date"
+                                        className="barber-form-control"
+                                        value={date}
+                                        onChange={handleDateChange}
+                                        required
+                                        isInvalid={!!dateError}
+                                    />
+                                    <Form.Control.Feedback type="invalid" className="barber-feedback-invalid">
+                                        {dateError}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
 
-                        <Button
-                            type="submit"
-                            className="btn-barber-action confirm-theme w-100 mt-2"
-                            disabled={!!dateError || barbersList.length === 0 || !date}
-                        >
-                            Confirmar Reserva de Turno
-                        </Button>
-                    </Form>
+                                <Form.Group as={Col} sm={6} xs={12}>
+                                    <Form.Label className="barber-form-label">Hora Disponible</Form.Label>
+                                    <Form.Select
+                                        className="barber-form-select"
+                                        value={time}
+                                        onChange={e => setTime(e.target.value)}
+                                        required
+                                        disabled={!!dateError || timeSlots.length === 0}
+                                    >
+                                        {timeSlots.length === 0 ? (
+                                            <option value="">Elegí una fecha primero...</option>
+                                        ) : (
+                                            timeSlots.map(slot => <option key={slot} value={slot}>{slot} hs</option>)
+                                        )}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Row>
 
-                ) : (
-                    /* Sección para comprar productos en góndola */
-                    <div className="barber-section-flow mt-4 pt-3">
-                        <h4 className="flow-section-subtitle product-theme mb-3">
-                            Adquirir Producto Profesional
-                        </h4>
+                            <Button
+                                type="submit"
+                                className="btn-barber-action confirm-theme w-100 mt-2"
+                                disabled={!!dateError || barbersList.length === 0 || !date}
+                            >
+                                Confirmar Reserva de Turno
+                            </Button>
+                        </Form>
 
-                        <div className="barber-product-pricing mb-3 p-3 rounded">
-                            <p className="pricing-stock mb-1">
-                                Disponibilidad en Góndola: <span className="fw-bold">{itemReal.stock !== undefined ? itemReal.stock : 0} uds.</span>
-                            </p>
-                            <p className="pricing-value mb-0">
-                                Valor Unitario: <span>${itemReal.price !== undefined ? itemReal.price.toFixed(2) : "0.00"}</span>
-                            </p>
+                    ) : (
+                        /* Sección para comprar productos en góndola */
+                        <div className="barber-section-flow mt-4 pt-3">
+                            <h4 className="flow-section-subtitle product-theme mb-3">
+                                Adquirir Producto Profesional
+                            </h4>
+
+                            <div className="barber-product-pricing mb-3 p-3 rounded">
+                                <p className="pricing-stock mb-1">
+                                    Disponibilidad en Góndola: <span className="fw-bold">{itemReal.stock !== undefined ? itemReal.stock : 0} uds.</span>
+                                </p>
+                                <p className="pricing-value mb-0">
+                                    Valor Unitario: <span>${itemReal.price !== undefined ? itemReal.price.toFixed(2) : "0.00"}</span>
+                                </p>
+                            </div>
+
+                            <Row className="mb-3 align-items-end">
+                                <Form.Group as={Col} xs={12} sm={4} className="mb-3 sm-0">
+                                    <Form.Label className="barber-form-label">Cantidad:</Form.Label>
+                                    <Form.Select
+                                        className="barber-form-select"
+                                        value={productQuantity}
+                                        onChange={e => setProductQuantity(Number(e.target.value))}
+                                        disabled={!itemReal.stock || itemReal.stock <= 0}
+                                    >
+                                        {itemReal.stock && itemReal.stock > 0 ? (
+                                            Array.from({ length: itemReal.stock }, (_, i) => i + 1).map(num => (
+                                                <option key={num} value={num}>
+                                                    {num} {num === 1 ? 'unidad' : 'unidades'}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value={0}>Agotado</option>
+                                        )}
+                                    </Form.Select>
+                                </Form.Group>
+
+                                <Col xs={12} sm={8}>
+                                    <Button
+                                        className="btn-barber-action product-theme-btn w-100"
+                                        onClick={handleAddToCart}
+                                        disabled={!itemReal.stock || itemReal.stock <= 0}
+                                    >
+                                        {itemReal.stock && itemReal.stock > 0 ? "Añadir al Carrito" : "Agotado Temporalmente"}
+                                    </Button>
+                                </Col>
+                            </Row>
                         </div>
+                    )}
 
-                        <Row className="mb-3 align-items-end">
-                            <Form.Group as={Col} xs={12} sm={4} className="mb-3 sm-0">
-                                <Form.Label className="barber-form-label">Cantidad:</Form.Label>
-                                <Form.Select
-                                    className="barber-form-select"
-                                    value={productQuantity}
-                                    onChange={e => setProductQuantity(Number(e.target.value))}
-                                    disabled={!itemReal.stock || itemReal.stock <= 0}
-                                >
-                                    {itemReal.stock && itemReal.stock > 0 ? (
-                                        Array.from({ length: itemReal.stock }, (_, i) => i + 1).map(num => (
-                                            <option key={num} value={num}>
-                                                {num} {num === 1 ? 'unidad' : 'unidades'}
-                                            </option>
-                                        ))
-                                    ) : (
-                                        <option value={0}>Agotado</option>
-                                    )}
-                                </Form.Select>
-                            </Form.Group>
-
-                            <Col xs={12} sm={8}>
-                                <Button
-                                    className="btn-barber-action product-theme-btn w-100"
-                                    onClick={handleAddToCart}
-                                    disabled={!itemReal.stock || itemReal.stock <= 0}
-                                >
-                                    {itemReal.stock && itemReal.stock > 0 ? "Añadir al Carrito" : "Agotado Temporalmente"}
-                                </Button>
-                            </Col>
-                        </Row>
-                    </div>
-                )}
-
-                <Button className="btn-barber-back w-100 mt-3" onClick={() => navigate("/library")}>
-                    Volver al Catálogo
-                </Button>
-            </Card.Body>
-        </Card>
+                    <Button className="btn-barber-back w-100 mt-3" onClick={() => navigate("/library")}>
+                        Volver al Catálogo
+                    </Button>
+                </Card.Body>
+            </Card>
+        </div>
     );
 };
 

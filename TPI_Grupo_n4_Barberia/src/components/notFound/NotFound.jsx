@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import "./NotFound.css"; // Importamos su hoja de estilos dedicada
+import "./NotFound.css"; //Importamos su hoja de estilos dedicada
 
 const NotFound = () => {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ const NotFound = () => {
     return (
         <div className="notfound-container d-flex align-items-center justify-content-center">
             <div className="notfound-card text-center p-5 shadow">
-                {/* Ícono conceptual: Un sillón vacío o unas tijeras cruzadas en el CSS */}
+                {/*Ícono conceptual: Un sillón vacío o unas tijeras cruzadas en el CSS*/}
                 <div className="notfound-icon-wrapper mb-4">
                     <span className="barber-pole-divider"></span>
                 </div>
