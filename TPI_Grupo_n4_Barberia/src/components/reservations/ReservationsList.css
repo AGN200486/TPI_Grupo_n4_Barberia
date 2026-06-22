@@ -90,7 +90,7 @@
     font-weight: 600;
 }
 
-/* --- BOTONES DE ACCIÓN --- */
+/* Botones de accion */
 
 /* Botón "Cancelar Turno" / "Dar de Baja" Inicial */
 .btn-barber-action-trigger {
@@ -109,7 +109,7 @@
     color: #f5ece3 !important;
 }
 
-/* Botón de Confirmación Real (Rojo Sólido) */
+/* Botón de Confirmación Real */
 .btn-barber-confirm-delete {
     background-color: #bd2130 !important;
     border: 1px solid #bd2130 !important;

@@ -4,7 +4,7 @@ import { verifyToken } from '../services/auth.services.js';
 
 const router = Router();
 
-// Le inyectamos verifyToken en el medio de la ruta para que actúe de escudo protector
+//Le inyectamos verifyToken en el medio de la ruta para que actúe de escudo protector
 router.post('/reservations', verifyToken, createReservation);
 router.get('/reservations', verifyToken, getReservations);
 router.delete('/reservations/:id', verifyToken, deleteReservation);

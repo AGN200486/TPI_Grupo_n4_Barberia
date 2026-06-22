@@ -1,20 +1,20 @@
 :root {
-  /* --- PALETA DE COLORES BARBERÍA (Inspirada en la foto) --- */
-  /* Madera ultra oscura/negro rústico para el fondo general */
+  /*PALETA DE COLORES BARBERÍA*/
+  /*Madera ultra oscura/negro rústico para el fondo general*/
   --bg: #120c08; 
-  /* Marrón café oscuro para tarjetas, modales y paneles */
+  /*Marrón café oscuro para tarjetas, modales y paneles*/
   --bg-surface: #211914; 
   --bg-surface-hover: #2e231c;
   
-  /* Textos: Blanco hueso / crema cálido y gris amarronado suave */
+  /*Textos:*/
   --text: #a19288;
   --text-h: #f5ece3;
   
-  /* Detalles rústicos y bordes simulando uniones de madera/hierro */
+  /*Detalles rústicos y bordes*/
   --border: #362920;
   --code-bg: #1a130e;
   
-  /* Dorado Cálido / Bronce (El alma de la iluminación de la foto) */
+  /*Dorado Cálido / Bronce*/
   --accent: #c59b27;
   --accent-bg: rgba(197, 155, 39, 0.1);
   --accent-border: rgba(197, 155, 39, 0.4);
@@ -23,14 +23,14 @@
   --social-bg: rgba(54, 41, 32, 0.5);
   --shadow: rgba(0, 0, 0, 0.6) 0 10px 20px -3px, rgba(0, 0, 0, 0.4) 0 4px 10px -2px;
 
-  /* Fuentes: agregamos Serifas para los títulos, le da un toque 'Old School' tradicional */
+  /*Fuentes: agregamos Serifas para los títulos*/
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: 'Georgia', Garamond, 'Times New Roman', serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: dark; /* Forzamos un esquema oscuro nativo */
+  color-scheme: dark; /*Forzamos un esquema oscuro nativo*/
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -43,8 +43,8 @@
   }
 }
 
-/* Eliminamos el detector de tema claro/oscuro del sistema operativo para que la app */
-/* se mantenga SIEMPRE con el diseño de barbería sin importar cómo tenga el usuario la PC */
+/*Eliminamos el detector de tema claro/oscuro del sistema operativo para que la app*/
+/*se mantenga siempre con el diseño de barbería sin importar cómo tenga el usuario la PC*/
 
 body {
   margin: 0;
@@ -53,11 +53,10 @@ body {
 }
 
 #root {
-  width: 100%; /* Cambiamos de 1126px a 100% para que el Header y el fondo ocupen toda la pantalla */
-  max-width: 1400px; /* Le damos un margen máximo más generoso */
+  width: 100%; /*Cambiamos de 1126px a 100% para que el Header y el fondo ocupen toda la pantalla*/
+  max-width: 1400px; /*Le damos un margen máximo más grande*/
   margin: 0 auto;
   text-align: center;
-  /* Reemplazamos el borde gris brillante por un tono madera oscuro casi imperceptible */
   border-inline: 1px solid var(--border); 
   min-height: 100svh;
   display: flex;
@@ -107,7 +106,7 @@ code,
   font-family: var(--mono);
   display: inline-flex;
   border-radius: 4px;
-  color: var(--accent); /* El contador ahora usa el dorado de acento */
+  color: var(--accent);
 }
 
 code {
@@ -118,9 +117,9 @@ code {
   border: 1px solid var(--border);
 }
 
-/* --- INTEGRACIÓN CON INTERFAZ Y BOOTSTRAP GENERAL --- */
+/*INTEGRACIÓN CON INTERFAZ Y BOOTSTRAP GENERAL*/
 
-/* Re-definimos clases comunes para que el catálogo adopte los colores rústicos */
+/*Clases comunes para que el catálogo adopte los colores rústicos*/
 .card {
   background-color: var(--bg-surface) !important;
   border: 1px solid var(--border) !important;
@@ -133,7 +132,6 @@ code {
   color: var(--text-h);
 }
 
-/* Si usan tablas en el Carrito o Reservas, esto las unifica con la madera de la foto */
 .table {
   --bs-table-bg: var(--bg-surface) !important;
   --bs-table-color: var(--text-h) !important;
@@ -141,7 +139,7 @@ code {
   color: var(--text-h) !important;
 }
 
-/* Modales e inputs */
+/*Modales e inputs*/
 .modal-content {
   background-color: var(--bg-surface) !important;
   border: 1px solid var(--border) !important;

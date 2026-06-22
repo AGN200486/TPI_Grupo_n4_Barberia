@@ -26,7 +26,7 @@
     }
 }
 
-/*Contenedor Principal (Estilo panel de madera oscura de fondo) */
+/*Contenedor Principal*/
 .cart-container {
     background-color: var(--bg-surface, #211914);
     border: 1px solid var(--border, #362920);
@@ -49,7 +49,7 @@
     font-style: italic;
 }
 
-/* --- TABLA DE COMPRAS PREMIUM --- */
+/*Tabla de compras*/
 .cart-table {
     margin-top: 15px;
     border-collapse: separate;
@@ -60,11 +60,11 @@
 }
 
 .cart-table thead {
-    background-color: #16110d; /* Fondo más oscuro para la cabecera */
+    background-color: #16110d; /*Fondo más oscuro para la cabecera*/
 }
 
 .cart-table th {
-    color: var(--accent, #c59b27) !important; /* Texto de columnas en bronce/dorado */
+    color: var(--accent, #c59b27) !important; /*Texto de columnas en bronce/dorado*/
     font-family: var(--heading, 'Georgia', serif);
     font-weight: 600;
     text-transform: uppercase;
@@ -80,7 +80,7 @@
 }
 
 .cart-table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.02) !important; /* Brillo sutil rústico */
+    background-color: rgba(255, 255, 255, 0.02) !important; /*Brillo sutil rústico*/
 }
 
 .cart-table td {
@@ -98,13 +98,13 @@
     color: var(--text-h, #f5ece3);
 }
 
-/* Resaltador dorado para precios finales y subtotales (Color de la iluminación de la foto) */
+/*Resaltador dorado para precios finales y subtotales*/
 .price-highlight {
     color: var(--accent, #c59b27) !important;
     font-weight: 700;
 }
 
-/* Línea divisoria inferior */
+/*Línea divisoria inferior*/
 .border-top-barber {
     border-top: 1px solid var(--border, #362920);
 }
@@ -114,13 +114,13 @@
     color: var(--text-h, #f5ece3);
 }
 
-/* --- BOTONES PERSONALIZADOS (Estilo Clásico) --- */
+/*Botones Personalizados*/
 
-/* Botón Sólido Dorado (Acción Principal) */
+/*Botón Dorado*/
 .btn-gold {
     background-color: var(--accent, #c59b27) !important;
     border: 1px solid var(--accent, #c59b27) !important;
-    color: #120c08 !important; /* Texto oscuro para máxima legibilidad */
+    color: #120c08 !important; /*Texto oscuro para máxima legibilidad*/
     font-weight: 700 !important;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -134,7 +134,7 @@
     box-shadow: 0 4px 12px rgba(197, 155, 39, 0.3);
 }
 
-/* Botón Delineado Dorado */
+/*Botón Delineado Dorado*/
 .btn-gold-outline {
     background: transparent !important;
     border: 1px solid var(--accent, #c59b27) !important;
@@ -149,7 +149,7 @@
     color: #120c08 !important;
 }
 
-/* Botón Secundario / Volver (Gris rústico) */
+/*Botón Secundario / Volver*/
 .btn-secondary-custom {
     background-color: transparent !important;
     border: 1px solid var(--border, #362920) !important;
@@ -163,7 +163,7 @@
     color: var(--text-h, #f5ece3) !important;
 }
 
-/* Botones de Alertas / Eliminar */
+/*Botones de Alertas / Eliminar*/
 .btn-danger-outline {
     background: transparent !important;
     border: 1px solid #8b2626 !important;
@@ -187,9 +187,9 @@
     background-color: #a73333 !important;
 }
 
-/* --- MODAL DE CHECKOUT ESTILO BARBERÍA --- */
+/*Modal del checkout*/
 .barber-modal .modal-content {
-    background-color: #1a130e !important; /* Madera más profunda para popups */
+    background-color: #1a130e !important; /*Madera más profunda*/
     border: 1px solid var(--border, #362920) !important;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
 }
@@ -220,7 +220,7 @@
     margin-bottom: 6px;
 }
 
-/* Selectores nativos oscurecidos */
+/*Selectores nativos oscurecidos*/
 .select-custom {
     background-color: #120c08 !important;
     border: 1px solid var(--border, #362920) !important;

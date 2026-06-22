@@ -3,10 +3,10 @@ import jwt from "jsonwebtoken";
 import { Op } from "sequelize"; 
 import { User } from "../models/User.js";
 
-// la clave secreta
+//la clave secreta
 const SECRET_KEY = "BarberiaTPI_Grupo4_SecretKey_2026";
 
-// Middleware para verificar el token en las rutas protegidas
+//Middleware para verificar el token en las rutas protegidas
 export const verifyToken = (req, res, next) => {
     const header = req.header("Authorization") || "";
     const token = header.split(" ")[1];
@@ -24,12 +24,12 @@ export const verifyToken = (req, res, next) => {
     }
 };
 
-// Registrar un nuevo usuario en la barbería
+//Registrar un nuevo usuario en la barbería
 export const registerUser = async (req, res) => {
     try {
         const { name, surname, email, password, role } = req.body;
 
-        // Controlar mínimo de 7 caracteres en el registro
+        //Controlar mínimo de 7 caracteres en el registro
         if (!password || password.length < 7) {
             return res.status(400).send({ message: "La contraseña debe tener al menos 7 caracteres." });
         }
@@ -57,7 +57,7 @@ export const registerUser = async (req, res) => {
     }
 };
 
-// Iniciar Sesión (Login)
+//Iniciar Sesión (Login)
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;

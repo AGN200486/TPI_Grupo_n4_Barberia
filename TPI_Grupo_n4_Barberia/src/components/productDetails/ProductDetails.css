@@ -139,7 +139,7 @@
     margin-top: 4px;
 }
 
-/* --- BOTONES DE ACCIÓN --- */
+/* Botones de accion */
 
 .btn-barber-action {
     border-radius: 4px;
@@ -151,7 +151,7 @@
     transition: all 0.2s ease-out !important;
 }
 
-/* Botón de Turnos (Bronce Viejo) */
+/* Botón de Turnos */
 .btn-barber-action.confirm-theme {
     background-color: var(--accent, #c59b27) !important;
     border: 1px solid var(--accent, #c59b27) !important;
@@ -163,7 +163,7 @@
     border-color: var(--accent-hover, #e5b83b) !important;
 }
 
-/* Botón de Productos (Bronce Dorado Claro) */
+/* Botón de Productos */
 .btn-barber-action.product-theme-btn {
     background-color: #e5b83b !important;
     border: 1px solid #e5b83b !important;
@@ -182,7 +182,7 @@
     cursor: not-allowed;
 }
 
-/* Botón Volver (Negro/Gris Minimalista) */
+/* Botón Volver */
 .btn-barber-back {
     background-color: transparent !important;
     border: 1px solid var(--border, #362920) !important;

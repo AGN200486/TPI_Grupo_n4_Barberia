@@ -1,10 +1,23 @@
-/* ==========================================================================
-   ESTRUCTURA DE LA TARJETA (Simetría e Identidad Visual)
-   ========================================================================== */
+.barber-auth-page {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important; /*Centrado horizontal estricto*/
+    align-items: flex-start !important; /*Alineado arriba*/
+    padding: 10px 20px 40px 20px;
+    box-sizing: border-box;
+}
+
+.barber-login-card,
+.barber-register-card {
+    /*Forzamos que los márgenes del navegador no tiren la tarjeta a un costado*/
+    margin: 30px auto 0 auto !important; 
+}
+
+/*Estructura de tarjetas*/
 .barber-login-card,
 .barber-register-card {
     width: 100%;
-    max-width: 440px; /* 🔑 Ancho estandarizado para ambos formularios */
+    max-width: 440px; /*Ancho estandarizado para ambos formularios*/
     background-color: rgba(22, 16, 12, 0.93) !important;
     backdrop-filter: blur(12px);
     border: 2px solid var(--border, #362920) !important;
@@ -13,7 +26,7 @@
     transition: transform 0.3s ease;
 }
 
-/* Títulos con tipografía imponente y espaciado orgánico */
+/*Títulos con tipografía imponente y espaciado orgánico*/
 .barber-login-title,
 .barber-register-title {
     font-family: var(--heading, 'Georgia', serif);
@@ -24,9 +37,7 @@
     margin-bottom: 1.75rem !important;
 }
 
-/* ==========================================================================
-   FORMULARIOS, INPUTS Y ETIQUETAS (Fits cómodos para el usuario)
-   ========================================================================== */
+/*FORMULARIOS, INPUTS Y ETIQUETAS*/
 .barber-login-label,
 .barber-register-label {
     color: var(--text-h, #f5ece3);
@@ -62,10 +73,8 @@
     background-color: rgba(14, 10, 7, 0.9) !important;
 }
 
-/* ==========================================================================
-   BOTONES Y ACCIONES (Centrados y ordenados en bloque)
-   ========================================================================== */
-/* Botón Principal Macizo */
+/*BOTONES Y ACCIONES*/
+/*Botón Principal*/
 button.btn.btn-barber-login-submit,
 button.btn.btn-barber-register-submit,
 .btn-barber-login-submit,
@@ -76,7 +85,7 @@ button.btn.btn-barber-register-submit,
     font-weight: 700 !important;
     text-transform: uppercase;
     letter-spacing: 1px;
-    height: 48px; /* Un pelín más alto que los inputs para destacar el click */
+    height: 48px; /*Un poco más alto que los inputs para destacar el click*/
     font-size: 0.95rem;
     border-radius: 4px;
     transition: all 0.2s ease-out !important;
@@ -94,7 +103,7 @@ button.btn.btn-barber-register-submit:hover {
     box-shadow: 0 5px 15px rgba(197, 155, 39, 0.25) !important;
 }
 
-/* Enlaces de redirección inferiores de Bootstrap (Limpios y Cómodos) */
+/*Enlaces de redirección inferiores de Bootstrap*/
 button.btn-link.btn-barber-login-link,
 button.btn-link.btn-barber-register-link,
 .btn-barber-login-link,
@@ -106,9 +115,9 @@ button.btn-link.btn-barber-register-link,
     background: none !important;
     border: none !important;
     padding: 0 !important;
-    margin-top: 1.25rem !important; /* Espacio prudente para no clickear por error */
+    margin-top: 1.25rem !important; /*Espacio para no clickear por error*/
     width: 100%;
-    text-align: center; /* Perfectamente centrado bajo el botón principal */
+    text-align: center; /*Centrado bajo el botón principal*/
     outline: none !important;
     box-shadow: none !important;
     transition: color 0.2s ease-in-out, text-shadow 0.2s ease;

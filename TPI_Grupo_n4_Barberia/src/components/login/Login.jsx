@@ -103,7 +103,7 @@ const Login = () => {
                                 ref={passwordRef}
                                 value={password}
                                 className={`login-input ${errors.password ? "login-input-error" : ""}`}
-                                minLength={7} // 🔑 Atributo HTML5 para coincidir con la restricción
+                                minLength={7} //Atributo HTML para coincidir con la restricción
                                 required
                             />
                             {errors.password && <p className="login-error-text mt-1 mb-0">Debes completar la contraseña, mínimo 7 caracteres.</p>}

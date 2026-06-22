@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useAuth } from "../../context/AuthContext"; // 👈 Importamos el contexto para saber quién está logueado
+import { useAuth } from "../../context/AuthContext"; // Importamos el contexto para saber quién está logueado
 import logo from '../../imagenes/iconoP.png';
 import tijera from '../../imagenes/tijera.png';
 import carro from '../../imagenes/carro.png';
@@ -7,7 +7,7 @@ import './Header.css';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { user } = useAuth(); // 👈 Traemos al usuario activo
+    const { user } = useAuth(); // Traemos al usuario activo
 
     // Evaluamos si el rol es administrativo para cambiar el texto del botón
     const isAdmin = user?.rol === 'admin' || user?.rol === 'superadmin';
@@ -44,7 +44,7 @@ const Header = () => {
                     </span>
                     )}
 
-                    {/* 📅 NUEVOS BOTONES: Solo se renderizan si hay un usuario logueado en el sistema */}
+                    {/* BOTONES: Solo se renderizan si hay un usuario logueado en el sistema */}
                     {user && (
                         <span className="text-white text-decoration-none nav-item fw-bold" onClick={() => navigate("/reservations")}>
                             <img src={carro} alt="carro" className="carro-icon" />

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Table, Button, Container } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
-import "./ReservationsList.css"; // 🔑 Integración de la hoja de estilos dedicada
+import "./ReservationsList.css"; // Integración de la hoja de estilos dedicada
 
 const ReservationsList = () => {
     const { user } = useAuth();

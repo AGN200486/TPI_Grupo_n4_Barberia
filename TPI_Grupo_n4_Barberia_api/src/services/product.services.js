@@ -77,7 +77,7 @@ export const updateProduct = async (req, res) => {
     }
 };
 
-// Eliminar un producto o servicio
+//Eliminar un producto o servicio
 export const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;

@@ -20,7 +20,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
 }
 
-/*Título de la tarjeta (Estilo Serif/Georgia elegante) */
+/*Título de la tarjeta */
 .new-product-title {
     font-family: var(--heading, 'Georgia', serif);
     color: var(--text-h, #f5ece3);
@@ -81,9 +81,9 @@
     color: var(--text-h, #f5ece3);
 }
 
-/* --- BOTONES --- */
+/*Botones*/
 
-/* Botón Guardar (Bronce sofisticado) */
+/* Botón Guardar */
 .btn-new-product-submit {
     background-color: var(--accent, #c59b27) !important;
     border: 1px solid var(--accent, #c59b27) !important;
@@ -103,7 +103,7 @@
     transform: translateY(-1px);
 }
 
-/* Botón Cancelar/Volver (Sobrio, gris oscuro integrado) */
+/* Botón Cancelar/Volver */
 .btn-new-product-cancel {
     background-color: transparent !important;
     border: 1px solid var(--border, #362920) !important;

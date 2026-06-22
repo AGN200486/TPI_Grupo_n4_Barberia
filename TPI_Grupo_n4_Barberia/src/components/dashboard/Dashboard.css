@@ -49,13 +49,13 @@
     padding-inline: 20px;
 }
 
-/* --- BOTONES DE ACCIONES --- */
+/*Botones de acciones*/
 
-/* Botón Agregar Ítem (Dorado/Bronce sofisticado) */
+/*Botón Agregar Ítem*/
 .btn-gold-admin {
     background-color: var(--accent, #c59b27) !important;
     border: 1px solid var(--accent, #c59b27) !important;
-    color: #120c08 !important; /* Texto oscuro */
+    color: #120c08 !important; /*Texto oscuro*/
     font-weight: 700 !important;
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -71,7 +71,7 @@
     transform: translateY(-1px);
 }
 
-/* Botón Cerrar Sesión (Estilo sobrio e integrado) */
+/* Botón Cerrar Sesión */
 .btn-logout {
     background-color: transparent !important;
     border: 1px solid var(--border, #362920) !important;
