@@ -9,7 +9,20 @@ export const createReservation = async (req, res) => {
         const { barberId, productId, date, time } = req.body;
         
         //Extraemos el id del cliente directamente del token decodificado
-        const clientId = req.user.id; 
+        const clientId = req.user.id;
+
+        //Evitar que se pueda agendar una reserva en una fecha que ya pasó
+        const todayStr = new Date().toLocaleDateString('es-AR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').reverse().join('-'); 
+
+        if (date < todayStr) {
+            return res.status(400).json({ 
+                message: "No es posible agendar un turno para una fecha que ya pasó." 
+            });
+        }
 
         //Evitar que el mismo barbero tenga dos turnos a la misma hora el mismo día
         const existingReservation = await Reservation.findOne({
