@@ -1,0 +1,118 @@
+.admin-panel-container {
+    padding: 3rem 2rem;
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-panel-box {
+    width: 100%;
+    max-width: 1100px;
+    background-color: var(--bg-surface, #1a1a1a);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.admin-panel-title {
+    color: var(--accent-gold, #d4af37);
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.admin-panel-subtitle {
+    color: #888;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.admin-alert-success {
+    background-color: rgba(40, 167, 69, 0.15);
+    border: 1px solid #28a745;
+    color: #28a745;
+    padding: 0.75rem 1.25rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    color: var(--text-light, #fff);
+}
+
+.admin-table th {
+    border-bottom: 2px solid var(--accent-gold, #d4af37);
+    padding: 1rem;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #2a2a2a;
+    vertical-align: middle;
+}
+
+/*Modificadores estéticos para las etiquetas de roles*/
+.role-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.role-cliente { background-color: #333; color: #ccc; }
+.role-barber { background-color: rgba(197, 155, 39, 0.2); color: var(--accent-gold, #d4af37); border: 1px solid var(--accent-gold, #d4af37); }
+.role-admin { background-color: rgba(0, 123, 255, 0.2); color: #007bff; border: 1px solid #007bff; }
+.role-superadmin { background-color: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid #dc3545; }
+
+.admin-actions-cell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.admin-select {
+    background-color: #111;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admin-select:focus {
+    border-color: var(--accent-gold, #d4af37);
+    outline: none;
+}
+
+.admin-btn-save {
+    background-color: var(--accent-gold, #d4af37);
+    color: #000;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.admin-btn-save:hover {
+    background-color: #fff;
+}
+
+.admin-loading {
+    color: #fff;
+    text-align: center;
+    padding: 5rem;
+    font-size: 1.2rem;
+}

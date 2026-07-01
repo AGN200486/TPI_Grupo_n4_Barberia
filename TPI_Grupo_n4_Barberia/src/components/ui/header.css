@@ -6,6 +6,7 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative; /* Clave para que los absolutos de adentro no se desmadren */
 }
 
 .logo {
@@ -49,6 +50,68 @@
 .tijera-icon, .carro-icon {
     width: 16px;
     height: auto;
-    /* Este filtro cambia el color de tus iconos negros/oscuros a un tono bronce/dorado */
+    /*Este filtro cambia el color de tus iconos negros/oscuros a un tono bronce/dorado*/
     filter: sepia(1) saturate(5) hue-rotate(15deg); 
+}
+
+/* --- NUEVOS ESTILOS PARA EL MENU DESPLEGABLE (DROPDOWN) --- */
+
+/* Contenedor relativo para posicionar el menú */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* El botón que activa el despliegue "Mi Cuenta ▼" */
+.dropdown-toggle-btn {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* El cuadro flotante del menú */
+.header-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 15px); /* Se posiciona justo abajo del botón dejando un aire */
+    background-color: var(--bg-surface) !important; /* Mismo fondo oscuro de tu barbería */
+    border: 1px solid var(--accent-gold); /* Borde dorado prolijo */
+    border-radius: 4px;
+    width: 220px;
+    z-index: 9999; /* Se superpone a cualquier fondo o slider */
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.7);
+}
+
+/* Cada opción individual adentro del menú */
+.header-dropdown-menu .dropdown-link {
+    padding: 12px 16px;
+    color: var(--text-light) !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Efecto hover común */
+.header-dropdown-menu .dropdown-link:hover {
+    background-color: rgba(197, 155, 39, 0.15); /* Fondo dorado ultra sutil */
+    color: var(--accent-gold) !important;
+}
+
+/* Estilo de alerta/destacado para el Panel del Superadmin */
+.header-dropdown-menu .admin-special-link {
+    color: #ff4444 !important;
+}
+
+.header-dropdown-menu .admin-special-link:hover {
+    background-color: #3d1414 !important; /* Fondo rojizo sutil */
+    color: #ff6666 !important;
 }

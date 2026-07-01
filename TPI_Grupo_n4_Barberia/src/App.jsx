@@ -11,6 +11,7 @@ import Protected from './components/protected/Protected';
 import NotFound from './components/notFound/NotFound';       
 import ReservationsList from './components/reservations/ReservationsList'; 
 import Cart from './components/cart/Cart';
+import AdminPanel from './components/adminPanel/AdminPanel';
 
 function App() {
     return (
@@ -40,6 +41,8 @@ function App() {
                     <Route path="/reservations" element={<ReservationsList />} />
 
                     <Route path="/cart" element={<Cart />} />
+
+                    <Route path="/admin-panel" element={<AdminPanel />} />
 
                     <Route path='*' element={<NotFound />} />
                 </Routes>

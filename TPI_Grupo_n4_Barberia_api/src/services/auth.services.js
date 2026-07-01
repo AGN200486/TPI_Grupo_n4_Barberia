@@ -110,3 +110,50 @@ export const getBarbers = async (req, res) => {
         res.status(500).send({ message: "Error al obtener los barberos: " + error.message });
     }
 };
+
+//Obtener todos los usuarios registrados (Solo Superadmin)
+export const getAllUsers = async (req, res) => {
+    try {
+        if (req.user.role !== 'superadmin') {
+            return res.status(403).json({ message: "Acceso denegado. Se requieren permisos de Superadmin." });
+        }
+        //Traemos todos los usuarios pero excluimos la contraseña por seguridad
+        const users = await User.findAll({
+            attributes: ['id', 'name', 'surname', 'email', 'role']
+        });
+
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener usuarios: " + error.message });
+    }
+};
+
+//Modificar el rol de un usuario (Solo Superadmin)
+export const updateUserRole = async (req, res) => {
+    try {
+        if (req.user.role !== 'superadmin') {
+            return res.status(403).json({ message: "Acceso denegado. Se requieren permisos de Superadmin." });
+        }
+
+        const { id } = req.params; //El ID del usuario a modificar
+        const { role } = req.body;  //El nuevo rol
+
+        //Validar que manden un rol válido
+        if (!role) {
+            return res.status(400).json({ message: "Debe especificar el nuevo rol." });
+        }
+
+        const user = await User.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado." });
+        }
+
+        //Actualizamos el rol en la base de datos
+        user.role = role.toLowerCase();
+        await user.save();
+
+        res.json({ message: `Rol del usuario ${user.email} actualizado a '${user.role}' con éxito.` });
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar el rol: " + error.message });
+    }
+};

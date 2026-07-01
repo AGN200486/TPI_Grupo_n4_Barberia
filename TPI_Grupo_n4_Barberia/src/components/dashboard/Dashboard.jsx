@@ -77,11 +77,6 @@ const Dashboard = () => {
         navigate("/library/add-product", { replace: true });
     };
 
-    const handleLogoutClick = () => {
-        logout(); 
-        toast.info("Sesión cerrada");
-        navigate("/login"); 
-    };
 
     return (
         <div className="dashboard-wrapper container mt-3 p-3 rounded">
@@ -92,9 +87,6 @@ const Dashboard = () => {
                         + Agregar Ítem
                     </Button>
                 )}
-                <Button className="btn-logout" onClick={handleLogoutClick}>
-                    Cerrar sesión
-                </Button>
             </div>
             
             <h2 className="dashboard-main-title text-center mt-3">BARBERÍA</h2>
