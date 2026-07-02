@@ -67,7 +67,7 @@ const ProductItem = ({ item, onDelete }) => {
                             {item.isService ? "Reservar Turno" : "Ver Producto"}
                         </Button>
                         
-                                            {/* 📝 BOTÓN DE EDICIÓN ESTILIZADO */}
+                        {/*BOTÓN DE EDICIÓN*/}
                         {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
                             <Button 
                                 className="btn-barber-edit w-100"

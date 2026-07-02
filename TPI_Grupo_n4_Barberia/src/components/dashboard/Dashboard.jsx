@@ -107,19 +107,19 @@ const Dashboard = () => {
                     }
                 />
                 
-                {/* 🛒 RUTA AGREGAR ÍTEM */}
+                {/*RUTA AGREGAR ÍTEM*/}
                 <Route
                     path="add-product"
                     element={<NewProduct onProductAdded={handleProductAdded} />}
                 />
                 
-                {/* 📝 RUTA EDITAR ÍTEM (Conectada a la función de recarga real) */}
+                {/*RUTA EDITAR ÍTEM*/}
                 <Route 
                     path="edit-product" 
                     element={<NewProduct onProductAdded={handleProductAdded} />} 
                 />
 
-                {/* 🔍 RUTA DETALLES (Va abajo de todo para que no intercepte "add-product" o "edit-product" como si fuesen IDs) */}
+                {/*RUTA DETALLES*/}
                 <Route path=":id" element={<ProductDetails />} />
             </Routes>
         </div>

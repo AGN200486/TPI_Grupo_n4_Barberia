@@ -120,9 +120,9 @@
     }
 }
 
-/* Botón de Editar Premium */
+/* Botón de Editar */
 .btn-barber-edit {
-    background-color: #f0a500 !important; /* Un tono dorado/barber */
+    background-color: #f0a500 !important;
     border: 1px solid #d49400 !important;
     color: #111111 !important;
     font-weight: 600 !important;

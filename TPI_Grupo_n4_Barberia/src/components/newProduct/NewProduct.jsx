@@ -66,7 +66,7 @@ const NewProduct = ({ onProductAdded }) => {
                     // Si falla, intentamos leer el error como texto
                     return res.text().then((text) => { throw new Error(text) });
                 }
-                // 🚀 OPCIÓN B: Si es PUT (edición) usamos text() para el string plano del backend. Si es POST usamos json()
+                //Si es PUT (edición) usamos text() para el string plano del backend. Si es POST usamos json()
                 return isEditMode ? res.text() : res.json();
             })
             .then(() => {
