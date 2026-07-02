@@ -1,3 +1,4 @@
+.login-container,
 .barber-auth-page {
     width: 100% !important;
     display: flex !important;
@@ -7,14 +8,14 @@
     box-sizing: border-box;
 }
 
-.barber-login-card,
+.login-card,
 .barber-register-card {
     /*Forzamos que los márgenes del navegador no tiren la tarjeta a un costado*/
     margin: 30px auto 0 auto !important; 
 }
 
 /*Estructura de tarjetas*/
-.barber-login-card,
+.login-card,
 .barber-register-card {
     width: 100%;
     max-width: 440px; /*Ancho estandarizado para ambos formularios*/
@@ -27,7 +28,7 @@
 }
 
 /*Títulos con tipografía imponente y espaciado orgánico*/
-.barber-login-title,
+.login-title,
 .barber-register-title {
     font-family: var(--heading, 'Georgia', serif);
     color: var(--text-h, #f5ece3);
@@ -38,18 +39,18 @@
 }
 
 /*FORMULARIOS, INPUTS Y ETIQUETAS*/
-.barber-login-label,
+.login-label,
 .barber-register-label {
     color: var(--text-h, #f5ece3);
     font-size: 0.82rem;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     font-weight: 600;
     display: block;
 }
 
-.barber-login-input,
+.login-input,
 .barber-register-input {
     background-color: rgba(14, 10, 7, 0.75) !important;
     border: 1px solid var(--border, #362920) !important;
@@ -59,14 +60,15 @@
     font-size: 0.95rem;
     height: 46px; /* Altura fija para consistencia visual de los campos */
     transition: all 0.25s ease-in-out;
+    margin-bottom: 1.25rem;
 }
 
-.barber-login-input::placeholder,
+.login-input::placeholder,
 .barber-register-input::placeholder {
     color: rgba(161, 146, 136, 0.35);
 }
 
-.barber-login-input:focus,
+.login-input:focus,
 .barber-register-input:focus {
     border-color: var(--accent, #c59b27) !important;
     box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.2) !important;
@@ -89,10 +91,10 @@ button.btn.btn-barber-register-submit,
     font-size: 0.95rem;
     border-radius: 4px;
     transition: all 0.2s ease-out !important;
-    display: flex;
+    display: center !important;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 40%;
 }
 
 button.btn.btn-barber-login-submit:hover,
@@ -116,6 +118,7 @@ button.btn-link.btn-barber-register-link,
     border: none !important;
     padding: 0 !important;
     margin-top: 1.25rem !important; /*Espacio para no clickear por error*/
+    margin-bottom: 1.25rem !important;
     width: 100%;
     text-align: center; /*Centrado bajo el botón principal*/
     outline: none !important;

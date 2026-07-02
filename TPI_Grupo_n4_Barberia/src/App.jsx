@@ -16,34 +16,33 @@ import AdminPanel from './components/adminPanel/AdminPanel';
 function App() {
     return (
         <div>
-            {/*Los carteles flotantes de notificación siempre arriba de todo */}
+            {/* Los carteles flotantes de notificación siempre arriba de todo */}
             <ToastContainer position="top-right" autoClose={3000} theme="dark" />
             
-            {/*El Router envuelve todo*/}
+            {/* El Router envuelve todo */}
             <BrowserRouter>
                 
-                {/*El Header acá arriba*/}
+                {/* El Header acá arriba */}
                 <Header /> 
                 
-                {/*La foto de fondo va abajo del Header */}
+                {/* La foto de fondo va abajo del Header */}
                 <Background />
                 
-                {/*Las rutas que cambian el cuerpo de la página */}
                 <Routes>
+                    {/* RUTAS PUBLICAS */}
                     <Route path='/' element={<Navigate to='login' />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
                     
+                    {/* RUTAS PROTEGIDAS */}
                     <Route element={<Protected />}>
                         <Route path='/library/*' element={<Dashboard />} />
+                        <Route path="/reservations" element={<ReservationsList />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/admin-panel" element={<AdminPanel />} />
                     </Route>
                     
-                    <Route path="/reservations" element={<ReservationsList />} />
-
-                    <Route path="/cart" element={<Cart />} />
-
-                    <Route path="/admin-panel" element={<AdminPanel />} />
-
+                    {/* Ruta error 404 */}
                     <Route path='*' element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

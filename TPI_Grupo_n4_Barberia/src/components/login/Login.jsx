@@ -75,11 +75,12 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container d-flex align-items-center justify-content-center">
-            <Card className="login-card shadow">
+        <div className="login-container">
+            <Card className="login-card shadow my-5 mx-auto">
                 <Card.Body className="p-4">
-                    <h3 className="login-title text-center mb-4">Iniciar Sesión</h3>
+                    <h4 className="login-title mb-4 text-center">Iniciar Sesión</h4>
                     <Form onSubmit={handleSubmit}>
+
                         <FormGroup className="mb-3">
                             <Form.Label className="login-label">Correo Electrónico</Form.Label>
                             <Form.Control
@@ -94,7 +95,7 @@ const Login = () => {
                             {errors.email && <p className="login-error-text mt-1 mb-0">Debes completar el email para iniciar sesión.</p>}
                         </FormGroup>
                         
-                        <FormGroup className="mb-3">
+                        <FormGroup className="mb-4">
                             <Form.Label className="login-label">Contraseña</Form.Label>
                             <Form.Control
                                 type="password"
