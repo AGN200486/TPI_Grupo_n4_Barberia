@@ -67,6 +67,16 @@ const ProductItem = ({ item, onDelete }) => {
                             {item.isService ? "Reservar Turno" : "Ver Producto"}
                         </Button>
                         
+                                            {/* 📝 BOTÓN DE EDICIÓN ESTILIZADO */}
+                        {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
+                            <Button 
+                                className="btn-barber-edit w-100"
+                                onClick={() => navigate("edit-product", { state: { editItem: item } })}
+                            >
+                                Editar
+                            </Button>
+                        )}
+                        
                         {/* Solo el dueño de la barbería (superadmin) puede ver este botón de borrar */}
                         {user?.rol === 'superadmin' && (
                             <Button className="btn-barber-delete w-100" onClick={handleDeleteClick}>
@@ -74,6 +84,7 @@ const ProductItem = ({ item, onDelete }) => {
                             </Button>
                         )}
                     </div>
+    
                 </Card.Body>
             </Card>
 

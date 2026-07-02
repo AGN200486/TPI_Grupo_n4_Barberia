@@ -1,24 +1,30 @@
 import { useState, useEffect } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../../context/AuthContext"; 
 import { toast } from "react-toastify";
-import "./NewProduct.css"; // Importamos su hoja de estilos dedicada
+import "./NewProduct.css"; 
 
 const NewProduct = ({ onProductAdded }) => {
     const navigate = useNavigate();
+    const { state } = useLocation(); 
     const { user } = useAuth(); 
 
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState(""); 
-    const [price, setPrice] = useState("");
-    const [stock, setStock] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
-    const [isService, setIsService] = useState(false); 
+    // Verificamos si existe un objeto para editar en el state
+    const isEditMode = !!(state && state.editItem);
+    const itemToEdit = state?.editItem || null;
+
+    // ESTADOS: Capturan las propiedades de tu modelo Sequelize
+    const [name, setName] = useState(itemToEdit ? (itemToEdit.name || "") : "");
+    const [description, setDescription] = useState(itemToEdit ? (itemToEdit.description || "") : ""); 
+    const [price, setPrice] = useState(itemToEdit ? itemToEdit.price : "");
+    const [stock, setStock] = useState(itemToEdit ? itemToEdit.stock : "");
+    const [imageUrl, setImageUrl] = useState(itemToEdit ? (itemToEdit.imageUrl || "") : "");
+    const [isService, setIsService] = useState(itemToEdit ? (itemToEdit.isService === true || itemToEdit.isService === 1) : false); 
 
     useEffect(() => {
         if (user?.rol !== "admin" && user?.rol !== "superadmin") {
-            toast.warn("No tenés permisos para agregar elementos.");
+            toast.warn("No tenés permisos para acceder a esta sección.");
             navigate("/library", { replace: true });
         }
     }, [user, navigate]);
@@ -30,7 +36,7 @@ const NewProduct = ({ onProductAdded }) => {
     const handleImageUrlChange = (event) => setImageUrl(event.target.value);
     const handleTypeChange = (event) => setIsService(event.target.value === "servicio");
 
-    const handleAddProduct = (event) => {
+    const handleSaveProduct = (event) => {
         event.preventDefault();
 
         const productData = {
@@ -42,8 +48,14 @@ const NewProduct = ({ onProductAdded }) => {
             isService: isService 
         };
 
-        fetch('http://localhost:3000/products', {
-            method: 'POST',
+        const url = isEditMode 
+            ? `http://localhost:3000/products/${itemToEdit.id}` 
+            : 'http://localhost:3000/products';
+            
+        const method = isEditMode ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -51,15 +63,15 @@ const NewProduct = ({ onProductAdded }) => {
         })
             .then((res) => {
                 if (!res.ok) {
-                    return res.json().then((errorData) => {
-                        throw new Error(errorData.message || 'Error al guardar el elemento');
-                    });
+                    // Si falla, intentamos leer el error como texto
+                    return res.text().then((text) => { throw new Error(text) });
                 }
-                return res.json();
+                // 🚀 OPCIÓN B: Si es PUT (edición) usamos text() para el string plano del backend. Si es POST usamos json()
+                return isEditMode ? res.text() : res.json();
             })
             .then(() => {
-                toast.success("¡Ítem agregado correctamente!");
-                onProductAdded();
+                toast.success(isEditMode ? "¡Ítem modificado correctamente!" : "¡Ítem agregado correctamente!");
+                if (onProductAdded) onProductAdded(); 
                 navigate("/library");
             })
             .catch((err) => {
@@ -72,15 +84,28 @@ const NewProduct = ({ onProductAdded }) => {
         <div className="barber-new-product-page new-product-container d-flex align-items-center justify-content-center">
             <Card className="new-product-card shadow">
                 <Card.Body className="p-4">
-                    <h4 className="new-product-title mb-4 text-center">Agregar Nuevo Ítem</h4>
-                    <Form onSubmit={handleAddProduct}>
+                    <h4 className="new-product-title mb-4 text-center">
+                        {isEditMode ? `Modificar Datos: ${itemToEdit.name}` : "Agregar Nuevo Ítem"}
+                    </h4>
+                    
+                    <Form onSubmit={handleSaveProduct}>
                         
                         <Form.Group className="mb-3" controlId="tipo">
                             <Form.Label className="new-product-label">Tipo de Ítem</Form.Label>
-                            <Form.Select className="new-product-select" onChange={handleTypeChange}>
+                            <Form.Select 
+                                className="new-product-select" 
+                                onChange={handleTypeChange}
+                                value={isService ? "servicio" : "producto"}
+                                disabled={isEditMode} 
+                            >
                                 <option value="producto">Producto Físico (Venta/Carrito)</option>
                                 <option value="servicio">Servicio de Barbería (Para Reserva)</option>
                             </Form.Select>
+                            {isEditMode && (
+                                <Form.Text className="text-muted">
+                                    No se puede alterar la naturaleza de un ítem existente.
+                                </Form.Text>
+                            )}
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="name">
@@ -115,7 +140,7 @@ const NewProduct = ({ onProductAdded }) => {
                                 Volver
                             </Button>
                             <Button className="btn-new-product-submit" type="submit">
-                                Guardar en Servidor
+                                {isEditMode ? "Actualizar Cambios" : "Guardar en Servidor"}
                             </Button>
                         </div>
                     </Form>

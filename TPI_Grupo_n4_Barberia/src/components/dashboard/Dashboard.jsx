@@ -6,20 +6,19 @@ import ProductDetails from '../productDetails/ProductDetails';
 import NewProduct from '../newProduct/NewProduct';
 import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
-import "./Dashboard.css"; //Importamos su hoja de estilos dedicada
+import "./Dashboard.css"; 
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
     
     const [searchParams] = useSearchParams();
-    //Captura "servicios", "productos" o cae en "todos" si se hace clic en Inicio
     const filtro = searchParams.get('tipo') || 'todos'; 
 
     const navigate = useNavigate();
-    const { user, logout } = useAuth(); //Traemos el usuario logueado del contexto
+    const { user, logout } = useAuth(); 
 
-    //Cargar catálogo inicial
+    // Cargar catálogo inicial
     useEffect(() => {
         fetch('http://localhost:3000/products', {
             method: 'GET'
@@ -31,7 +30,6 @@ const Dashboard = () => {
                 return res.json();
             })
             .then((datos) => {
-                // Separamos dinámicamente según 'isService' (Soporta booleanos y enteros de SQLite)
                 setProducts(datos.filter(item => !item.isService || item.isService === 0 || item.isService === false));
                 setServices(datos.filter(item => item.isService || item.isService === 1 || item.isService === true));
             })
@@ -41,7 +39,7 @@ const Dashboard = () => {
             });
     }, []);
 
-    //Esta función se llamará desde NewProduct cuando inserte con éxito en la API
+    // Función que recarga el catálogo tras agregar o editar un elemento
     const handleProductAdded = () => {
         fetch('http://localhost:3000/products')
             .then((res) => res.json())
@@ -52,7 +50,7 @@ const Dashboard = () => {
             .catch((err) => console.log(err));
     };
 
-    //Peticion delete: Elimina físicamente el producto/servicio usando su ID 
+    // Petición DELETE
     const handleDeleteProduct = (id) => {
         fetch(`http://localhost:3000/products/${id}`, {
             method: 'DELETE',
@@ -61,8 +59,6 @@ const Dashboard = () => {
                 if (!res.ok) {
                     throw new Error('No se pudo eliminar el ítem');
                 }
-
-                //Filtramos el estado local para que desaparezca de la pantalla al instante
                 setProducts((prevProducts) => prevProducts.filter((p) => p.id !== id));
                 setServices((prevServices) => prevServices.filter((s) => s.id !== id));
                 toast.success('Ítem eliminado correctamente');
@@ -77,11 +73,9 @@ const Dashboard = () => {
         navigate("/library/add-product", { replace: true });
     };
 
-
     return (
         <div className="dashboard-wrapper container mt-3 p-3 rounded">
             <div className="dashboard-actions d-flex justify-content-end gap-2 p-2">
-                {/*Control de permisos: Solo admin o superadmin ven el botón de agregar*/}
                 {(user?.rol === 'admin' || user?.rol === 'superadmin') && (
                     <Button className="btn-gold-admin" onClick={handleNavigateAddProduct}>
                         + Agregar Ítem
@@ -97,7 +91,6 @@ const Dashboard = () => {
                     index
                     element={
                         <div className="mt-4">
-                            {/*Mandamos cada lista limpia a su propia sección independiente*/}
                             {filtro === 'servicios' && (
                                 <Product product={services} onDelete={handleDeleteProduct} tipoSeccion="servicios" />
                             )}
@@ -106,7 +99,6 @@ const Dashboard = () => {
                             )}
                             {filtro === 'todos' && (
                                 <>
-                                    {/*Renderizamos el mismo componente dos veces, pasándole la lista correspondiente*/}
                                     <Product product={services} onDelete={handleDeleteProduct} tipoSeccion="servicios" />
                                     <Product product={products} onDelete={handleDeleteProduct} tipoSeccion="productos" />
                                 </>
@@ -114,10 +106,20 @@ const Dashboard = () => {
                         </div>
                     }
                 />
+                
+                {/* 🛒 RUTA AGREGAR ÍTEM */}
                 <Route
                     path="add-product"
                     element={<NewProduct onProductAdded={handleProductAdded} />}
                 />
+                
+                {/* 📝 RUTA EDITAR ÍTEM (Conectada a la función de recarga real) */}
+                <Route 
+                    path="edit-product" 
+                    element={<NewProduct onProductAdded={handleProductAdded} />} 
+                />
+
+                {/* 🔍 RUTA DETALLES (Va abajo de todo para que no intercepte "add-product" o "edit-product" como si fuesen IDs) */}
                 <Route path=":id" element={<ProductDetails />} />
             </Routes>
         </div>

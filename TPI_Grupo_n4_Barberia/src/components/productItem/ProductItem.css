@@ -119,3 +119,25 @@
         max-width: 280px;
     }
 }
+
+/* Botón de Editar Premium */
+.btn-barber-edit {
+    background-color: #f0a500 !important; /* Un tono dorado/barber */
+    border: 1px solid #d49400 !important;
+    color: #111111 !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.btn-barber-edit:hover {
+    background-color: #d49400 !important;
+    box-shadow: 0 0 10px rgba(240, 165, 0, 0.5) !important;
+    transform: translateY(-1px);
+}
+
+.btn-barber-edit:active {
+    transform: translateY(1px);
+}
